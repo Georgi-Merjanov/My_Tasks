@@ -1,1 +1,2 @@
 Проект по Въведение в скриптовите езици на Python - Моите задачи.
+[![wakatime](https://wakatime.com/badge/user/3faea4a2-8676-4ae7-84da-603009f16e60/project/d5328a4d-6db7-4679-9ccf-3ee32d156109.svg)](https://wakatime.com/badge/user/3faea4a2-8676-4ae7-84da-603009f16e60/project/d5328a4d-6db7-4679-9ccf-3ee32d156109)
