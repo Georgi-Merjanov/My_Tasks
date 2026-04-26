@@ -1,4 +1,6 @@
 .venv/
 __pycache__/
 *.db
+static/profile_pics/*
+!static/profile_pics/.gitkeep
 .wakatime-project
