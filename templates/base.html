@@ -5,13 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="refresh" content="100000">
     <link rel="stylesheet" href="{{url_for('static', filename='css/base.css')}}">
+    <link rel="icon" type="image/png" href="{{url_for('static', filename='pictures/logo.png')}}">
     {% block head %} {% endblock %}
 </head>
 
 <body>
-    <header>Моите задачи</header>
-    <main>
-        {% block body %} {% endblock %}
-    </main>
+    {% if session.get('user_id') %}
+    <header>
+        <nav>
+            <div id="nav-left">
+                <a href="{{ url_for('home') }}">
+                    <img src="{{ url_for('static', filename='pictures/logo.png') }}">
+                </a>
+            </div>
+            <h1 id="site-title">Моите задачи</h1>
+            <div id="nav-right">
+                <a href="{{ url_for('statistics') }}">Статистики</a>
+                <a href="{{ url_for('profile') }}">Профил</a>
+                <img src="{{ url_for('static', filename='profile_pictures/default.png') }}">
+            </div>
+        </nav>
+    </header>
+    {% endif %}
+    {% block body %} {% endblock %}
 </body>
 </html>

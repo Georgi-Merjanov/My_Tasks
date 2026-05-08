@@ -2,5 +2,5 @@
 __pycache__/
 *.db
 static/profile_pics/*
-!static/profile_pics/.gitkeep
-.wakatime-project
+migrations/
+password.py

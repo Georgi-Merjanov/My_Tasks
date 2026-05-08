@@ -9,9 +9,75 @@ $bg-main: #fdfaf1;
 $bg-day: #ffffff;
 $text: #2c3e50;
 $border: #e0d7c1;
+$text-dark: #333;
+$transition-speed: 0.3s;
 
 
-header{
-    color: $text;
-    text-align: center;
+body {
+    margin: 0;
+    padding: 0;
+}
+
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: beige;
+    border-bottom: 0.06rem solid #ccc;
+
+    #nav-left {
+        flex: 1;
+        display: flex;
+        justify-content: flex-start;
+
+        a {
+            display: flex;
+            flex: none;
+            width: fit-content; 
+            
+            img {
+                width: 3.5rem;
+                height: 3.5rem;
+            }
+        }
+    }
+
+    #site-title {
+        flex: 2;
+        text-align: center;
+        font-size: 1.5rem;
+        margin: 0;
+        color: #000;
+    }
+
+    #nav-right {
+        flex: 1;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 2rem;
+
+        a {
+            text-decoration: none;
+            font-weight: 600;
+            background-color: beige;
+            border-radius: 0.3rem;
+            padding: 0.3rem;
+            color: #000;
+
+            &:hover{
+                background-color: rgb(222, 222, 195);
+            }
+        }
+
+        img {
+            width: 3rem;
+            height: 3rem;
+            border: 0.2rem solid rgb(222, 222, 195);;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    }
 }

@@ -1,33 +1,38 @@
 {% extends "base.html" %}
 
 {% block head %}
-    <title>Вход</title>
+    <title>Регистрация</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/login_and_register.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 {% endblock %}
 
 {% block body %}
 <main>
-    <h2>Влез в профила си</h2>
-    <form action="{{ url_for('login') }}" method="POST">
+    <h2>Създай нов профил</h2>
+    <form action="/register" method="POST">
         <div>
             <label for="username">Потребителско име:</label>
             <input type="text" id="username" name="username" required>
         </div>
+        
+        <div>
+            <label for="email">Имейл:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
 
         <div>
             <label for="password">Парола:</label>
-            <input type="password" id="password" name="password" required>
+            <input type="password" id="password" name="password" required minlength="10">
             <i class="fa-solid fa-eye" id="toggle_password"></i>
         </div>
 
-        <input type="submit" value="Вход">
+        <input type="submit" value="Регистрирай се">
     </form>
     {% if(error) %}
     <h3>{{ error }}</h3>
     {% endif %}
 
-    <p>Нямаш профил? <a href="{{ url_for('register') }}">Регистрирай се тук</a></p>
+    <p>Вече имаш профил? <a href="{{ url_for('login') }}">Влез тук</a></p>
 </main>
 
 <script>
