@@ -126,7 +126,7 @@ def profile():
     
     elif(action=="update_username"):
         new_username=request.form.get("username")
-        if new_username==user.username:
+        if(new_username==user.username):
             return redirect(url_for('profile'))
         existing_user=db.session.execute(db.select(User).filter_by(username=new_username)).scalar_one_or_none()
         if(existing_user and existing_user.id!=user.id):
@@ -134,6 +134,17 @@ def profile():
         user.username=new_username
         db.session.commit()
         return render_template("profile.html", user=user, success="Успешно променихте потребителското си име!")
+    
+    elif(action=="update_email"):
+        new_email=request.form.get("email")
+        if(new_email==user.email):
+            return redirect(url_for('profile'))
+        existing_user=db.session.execute(db.select(User).filter_by(email=new_email)).scalar_one_or_none()
+        if(existing_user and existing_user.id!=user.id):
+            return render_template("profile.html", user=user, error2="Този имейл вече е зает!")
+        user.email=new_email
+        db.session.commit()
+        return render_template("profile.html", user=user, success2="Успешно променихте имейлът си!")
 
 
 @app.route("/logout", methods=["GET","POST"])
