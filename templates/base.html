@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    {% if session.get('user_id') %}
+    {% if(session.get('user_id')) %}
     <header>
         <nav>
             <div id="nav-left">
@@ -20,8 +20,8 @@
             </div>
             <h1 id="site-title">Моите задачи</h1>
             <div id="nav-right">
-                <a href="{{ url_for('statistics') }}">Статистики</a>
-                <a href="{{ url_for('profile') }}">Профил</a>
+                <a href="{{ url_for('statistics') }}" class="{% if(request.path=='/statistics') %} active {% endif %}">Статистики</a>
+                <a href="{{ url_for('profile') }}" class="{% if(request.path=='/profile') %} active {% endif %}">Профил</a>
                 <img src="{{ url_for('static', filename='profile_pictures/default.png') }}">
             </div>
         </nav>
