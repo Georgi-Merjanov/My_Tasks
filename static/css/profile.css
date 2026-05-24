@@ -1,3 +1,4 @@
+@charset "UTF-8";
 body {
   margin: 0;
   padding: 0;
@@ -58,10 +59,16 @@ nav #nav-right a.active {
 nav #nav-right img {
   width: 3rem;
   height: 3rem;
-  border: 0.2rem solid rgb(222, 222, 195);
   border-radius: 50%;
   -o-object-fit: cover;
      object-fit: cover;
+  border: none !important;
+}
+nav #nav-right img[alt="Профилна снимка"] {
+  border: 0.2rem solid rgb(224, 202, 178) !important;
+}
+nav #nav-right img.placeholder {
+  border: none !important;
 }
 
 #profile-page {
@@ -106,12 +113,11 @@ nav #nav-right img {
   border-radius: 50%;
   -o-object-fit: cover;
      object-fit: cover;
-  border: 0.25rem solid #4a90e2;
   transition: transform 0.3s, border-color 0.3s;
 }
 #profile-page #avatar-container label img:hover, #profile-page #avatar-container label .placeholder:hover {
   transform: scale(1.03);
-  border-color: #7cb5f9;
+  border-color: rgb(242, 242, 157);
 }
 #profile-page #avatar-container label .placeholder {
   background-color: #fdfaf1;
@@ -128,6 +134,26 @@ nav #nav-right img {
 }
 #profile-page #avatar-container label span:hover {
   color: #7cb5f9;
+}
+#profile-page #avatar-container #delete-avatar-btn {
+  background-color: transparent;
+  color: #e74c3c;
+  border: 0.06rem solid #e74c3c;
+  margin-top: 1rem;
+  padding: 0.4rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+#profile-page #avatar-container #delete-avatar-btn:hover {
+  background-color: #e74c3c;
+  color: #fff;
+  box-shadow: 0 0.2rem 0.5rem rgba(231, 76, 60, 0.3);
+}
+#profile-page #avatar-container #delete-avatar-btn:active {
+  transform: scale(0.98);
 }
 #profile-page #info-container {
   display: flex;

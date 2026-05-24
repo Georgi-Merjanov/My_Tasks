@@ -4,6 +4,7 @@ from sqlalchemy import String, Integer, Boolean, ForeignKey
 from sqlalchemy.orm import DeclarativeBase, mapped_column, Mapped, relationship
 from flask_migrate import Migrate
 from password import password
+import os
 
 app=Flask(__name__)
 app.secret_key="taen_kluch"
@@ -42,11 +43,17 @@ with app.app_context():
     db.create_all()
 
 
+def get_user():
+    user_id=session.get("user_id")
+    user=db.session.execute(db.select(User).filter_by(id=user_id)).scalar_one_or_none()
+    return user
+
+
 @app.route("/", methods=["GET", "POST"])
 def home():
     if("user_id" not in session):
         return redirect(url_for("login"))
-    return render_template("index.html")
+    return render_template("index.html", user=get_user())
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -92,17 +99,33 @@ def login():
         return render_template("login.html", error="Грешна парола!")
 
 
-def get_user():
-    user_id=session.get("user_id")
-    user=db.session.execute(db.select(User).filter_by(id=user_id)).scalar_one_or_none()
-    return user
-
-
 @app.route("/profile", methods=["GET", "POST"])
 def profile():
     if(request.method=="GET"):
         return render_template("profile.html", user=get_user())
-    pass
+    
+    user=get_user()
+    action=request.form.get("action")
+
+    if(action=="update_avatar"):
+        file=request.files.get("profile_picture")
+        file.filename=f"{user.id}.png"
+        path=os.path.join(app.root_path, "static", "profile_pictures", file.filename)
+        file.save(path)
+        user.profile_picture=file.filename
+        db.session.commit()
+        return redirect(url_for('profile'))
+    
+    elif(action=="remove_avatar"):
+        file_path=os.path.join(app.root_path, "static", "profile_pictures", user.profile_picture)
+        if(os.path.exists(file_path)):
+            os.remove(file_path)
+        user.profile_picture=None
+        db.session.commit()
+        return redirect(url_for('profile'))
+    
+
+
 
 
 @app.route("/logout", methods=["GET","POST"])
@@ -116,7 +139,7 @@ def logout():
 
 @app.route("/statistics", methods=["GET"])
 def statistics():
-    return render_template("statistics.html")
+    return render_template("statistics.html", user=get_user())
 
 
 if(__name__ == "__main__"):

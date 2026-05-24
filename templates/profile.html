@@ -8,15 +8,26 @@
 {% block body %}
 <main id="profile-page">
     <div id="avatar-container">
-        <input type="file" id="avatar-input" name="profile_picture" accept="image/*" style="display: none;">
-        <label for="avatar-input">
-            {% if(user.profile_picture) %}
-                <img src="{{ url_for('static', filename='profile_pictures/' + user.profile_picture) }}" alt="Профилна снимка">
-            {% else %}
-                <img src="{{ url_for('static', filename='pictures/camera.png')}}" class="placeholder">
-            {% endif %}
-            <span>Смени снимката</span>
-        </label>
+        <form action="{{ url_for('profile') }}" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="action" value="update_avatar">
+            <input type="file" id="avatar-input" name="profile_picture" accept="image/*" style="display: none;" onchange="this.form.submit()">
+            
+            <label for="avatar-input">
+                {% if(user.profile_picture) %}
+                    <img src="{{ url_for('static', filename='profile_pictures/' + user.profile_picture) }}" style="border: 0.25rem solid rgb(221, 221, 150);" alt="Профилна снимка">
+                {% else %}
+                    <img src="{{ url_for('static', filename='pictures/camera.png')}}" class="placeholder">
+                {% endif %}
+                <span>Смени снимката</span>
+            </label>
+        </form>
+
+        {% if user.profile_picture %}
+        <form action="{{ url_for('profile') }}" method="POST">
+            <input type="hidden" name="action" value="remove_avatar">
+            <button type="submit" id="delete-avatar-btn">Премахни снимката</button>
+        </form>
+        {% endif %}
     </div>
 
     <div id="info-container">

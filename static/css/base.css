@@ -1,3 +1,4 @@
+@charset "UTF-8";
 body {
   margin: 0;
   padding: 0;
@@ -61,5 +62,11 @@ nav #nav-right img {
   border-radius: 50%;
   -o-object-fit: cover;
      object-fit: cover;
+  border: none !important;
+}
+nav #nav-right img[alt="Профилна снимка"] {
+  border: 0.2rem solid rgb(224, 202, 178) !important;
+}
+nav #nav-right img.placeholder {
   border: none !important;
 }/*# sourceMappingURL=base.css.map */

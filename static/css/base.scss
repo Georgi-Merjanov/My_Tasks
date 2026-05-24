@@ -83,6 +83,14 @@ nav {
             border-radius: 50%;
             object-fit: cover;
             border: none !important;
+            
+            &[alt="Профилна снимка"] {
+                border: 0.2rem solid rgb(224, 202, 178) !important;
+            }
+
+            &.placeholder {
+                border: none !important;
+            }
         }
     }
 }

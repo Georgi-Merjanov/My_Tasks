@@ -47,12 +47,11 @@ $danger-border: #f8d7da;
                 height: 10rem;
                 border-radius: 50%;
                 object-fit: cover;
-                border: 0.25rem solid $primary-main;
                 transition: transform $transition-speed, border-color $transition-speed;
 
                 &:hover{
                     transform: scale(1.03);
-                    border-color: $primary-hover;
+                    border-color: rgb(242, 242, 157);
                 }
             }
 
@@ -73,6 +72,29 @@ $danger-border: #f8d7da;
                 &:hover{
                     color: $primary-hover;
                 }
+            }
+        }
+
+        #delete-avatar-btn {
+        background-color: transparent;
+        color: $delete;
+        border: 0.06rem solid $delete;
+        margin-top: 1rem;
+        padding: 0.4rem 1rem;
+        font-size: 0.9rem;
+        font-weight: 600;
+        border-radius: 0.3rem;
+        cursor: pointer;
+        transition: all $transition-speed ease;
+
+            &:hover {
+                background-color: $delete;
+                color: #fff;
+                box-shadow: 0 0.2rem 0.5rem rgba($delete, 0.3);
+            }
+
+            &:active {
+                transform: scale(0.98);
             }
         }
     }
