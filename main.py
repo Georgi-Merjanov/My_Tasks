@@ -124,8 +124,16 @@ def profile():
         db.session.commit()
         return redirect(url_for('profile'))
     
-
-
+    elif(action=="update_username"):
+        new_username=request.form.get("username")
+        if new_username==user.username:
+            return redirect(url_for('profile'))
+        existing_user=db.session.execute(db.select(User).filter_by(username=new_username)).scalar_one_or_none()
+        if(existing_user and existing_user.id!=user.id):
+            return render_template("profile.html", user=user, error="Това потребителско име вече е заето!")
+        user.username=new_username
+        db.session.commit()
+        return render_template("profile.html", user=user, success="Успешно променихте потребителското си име!")
 
 
 @app.route("/logout", methods=["GET","POST"])
