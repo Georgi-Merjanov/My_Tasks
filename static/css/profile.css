@@ -308,4 +308,23 @@ nav #nav-right img.placeholder {
 }
 #profile-page #danger-container form button:hover {
   color: rgb(190.9931506849, 39.1780821918, 23.5068493151);
+}
+
+.password-field-group {
+  position: relative;
+  width: 100%;
+}
+.password-field-group input {
+  width: 100%;
+  padding-right: 2.5rem;
+  box-sizing: border-box;
+}
+.password-field-group i.toggle-password {
+  position: absolute;
+  right: 1rem;
+  bottom: 0.9rem;
+  cursor: pointer;
+  color: #888;
+  font-size: 1rem;
+  transition: color 0.2s;
 }/*# sourceMappingURL=profile.css.map */

@@ -5,6 +5,7 @@ from sqlalchemy.orm import DeclarativeBase, mapped_column, Mapped, relationship
 from flask_migrate import Migrate
 from password import password
 import os
+from werkzeug.security import check_password_hash, generate_password_hash
 
 app=Flask(__name__)
 app.secret_key="taen_kluch"
@@ -64,8 +65,12 @@ def register():
     new_username=request.form.get("username")
     new_email=request.form.get("email")
     new_password=request.form.get("password")
+
     if(not new_username or not new_email or not new_password):
         return render_template("register.html", error="Моля попълнете всички полета!")
+    
+    if(len(new_password)<10):
+        return render_template("register.html", error="Паролата трябва да е поне 10 символа!")
     
     if(db.session.execute(db.select(User).filter_by(username=new_username)).scalar_one_or_none()):
         return render_template("register.html", error="Това потребителско име вече е заето!")
@@ -73,7 +78,8 @@ def register():
     if(db.session.execute(db.select(User).filter_by(email=new_email)).scalar_one_or_none()):
         return render_template("register.html", error="Този имейл вече е зает!")
     
-    new_user=User(username=new_username, email=new_email, password=new_password)
+    hashed_password=generate_password_hash(new_password)
+    new_user=User(username=new_username, email=new_email, password=hashed_password)
     db.session.add(new_user)
     db.session.commit()
     return redirect(url_for("login"))
@@ -86,13 +92,17 @@ def login():
 
     login_username=request.form.get("username")
     login_password=request.form.get("password")
+
     if(not login_username or not login_password):
         return render_template("login.html", error="Моля попълнете всички полета!")
+    
+    if(len(login_password)<10):
+        return render_template("login.html", error="Паролата трябва да е поне 10 символа!")
     
     user=db.session.execute(db.select(User).filter_by(username=login_username)).scalar_one_or_none()
     if(not user):
         return render_template("login.html", error="Грешно потребителско име!")
-    if(user.password==login_password):
+    if(check_password_hash(user.password, login_password)):
         session["user_id"]=user.id
         return redirect(url_for("home"))
     else:
@@ -130,10 +140,10 @@ def profile():
             return redirect(url_for('profile'))
         existing_user=db.session.execute(db.select(User).filter_by(username=new_username)).scalar_one_or_none()
         if(existing_user and existing_user.id!=user.id):
-            return render_template("profile.html", user=user, error="Това потребителско име вече е заето!")
+            return render_template("profile.html", user=user, error_username="Това потребителско име вече е заето!")
         user.username=new_username
         db.session.commit()
-        return render_template("profile.html", user=user, success="Успешно променихте потребителското си име!")
+        return render_template("profile.html", user=user, success_username="Успешно променихте потребителското си име!")
     
     elif(action=="update_email"):
         new_email=request.form.get("email")
@@ -141,10 +151,32 @@ def profile():
             return redirect(url_for('profile'))
         existing_user=db.session.execute(db.select(User).filter_by(email=new_email)).scalar_one_or_none()
         if(existing_user and existing_user.id!=user.id):
-            return render_template("profile.html", user=user, error2="Този имейл вече е зает!")
+            return render_template("profile.html", user=user, error_email="Този имейл вече е зает!")
         user.email=new_email
         db.session.commit()
-        return render_template("profile.html", user=user, success2="Успешно променихте имейлът си!")
+        return render_template("profile.html", user=user, success_email="Успешно променихте имейлът си!")
+    
+    elif(action=="update_password"):
+        old_password=request.form.get("old_password")
+        new_password=request.form.get("new_password")
+        confirm_password=request.form.get("confirm_password")
+        
+        if(not old_password or not new_password or not confirm_password):
+            return render_template("profile.html", user=user, error_password="Моля попълнете всички полета!")
+        
+        if(len(new_password)<10):
+            return render_template("profile.html", user=user, error_password="Паролата трябва да е поне 10 символа!")
+        
+        if(not check_password_hash(user.password, old_password)):
+            return render_template("profile.html", user=user, error_password="Старата парола е грешна!")
+        
+        if(new_password!=confirm_password):
+            return render_template("profile.html", user=user, error_password="Паролите не съвпадат!")
+        
+        hashed_password=generate_password_hash(new_password)
+        user.password=hashed_password
+        db.session.commit()
+        return render_template("profile.html", user=user, success_password="Успешно променихте паролата си!")
 
 
 @app.route("/logout", methods=["GET","POST"])

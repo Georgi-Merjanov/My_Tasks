@@ -277,3 +277,25 @@ $danger-border: #f8d7da;
         }
     }
 }
+
+
+.password-field-group {
+    position: relative;
+    width: 100%;
+
+    input {
+        width: 100%;
+        padding-right: 2.5rem;
+        box-sizing: border-box;
+    }
+
+    i.toggle-password {
+        position: absolute;
+        right: 1rem;
+        bottom: 0.9rem;
+        cursor: pointer;
+        color: #888;
+        font-size: 1rem;
+        transition: color 0.2s;
+    }
+}
