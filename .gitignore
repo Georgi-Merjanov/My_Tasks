@@ -1,6 +1,7 @@
 .venv/
 __pycache__/
 *.db
-static/profile_pics/*.png
+static/profile_pics/*
+!static/profile_pictures/.gitkeep
 migrations/
 password.py
