@@ -1,12 +1,75 @@
-{% extends 'base.html' %}
-
+{% extends "base.html" %}
 
 {% block head %}
-    <title>Профил</title>
-    <link rel="stylesheet" href="{{url_for('static', filename='css/profile.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+    <title>Моят Профил</title>
 {% endblock %}
 
-
 {% block body %}
-<h1>Профил</h1>
+<main id="profile-page">
+    <div id="avatar-container">
+        <input type="file" id="avatar-input" name="profile_picture" accept="image/*" style="display: none;">
+        <label for="avatar-input">
+            {% if(user.profile_picture) %}
+                <img src="{{ url_for('static', filename='profile_pictures/' + user.profile_picture) }}" alt="Профилна снимка">
+            {% else %}
+                <div class="placeholder">📷</div>
+            {% endif %}
+            <span>Смени снимката</span>
+        </label>
+    </div>
+
+    <div id="info-container">
+        <form action="{{ url_for('profile') }}" method="POST">
+            <input type="hidden" name="action" value="update_username">
+            <div>
+                <label for="username">Потребителско име</label>
+                <input type="text" id="username" name="username" value="{{ user.username }}" required>
+            </div>
+            <button type="submit">Смени</button>
+        </form>
+
+        <form action="{{ url_for('profile') }}" method="POST">
+            <input type="hidden" name="action" value="update_email">
+            <div>
+                <label for="email">Имейл</label>
+                <input type="email" id="email" name="email" value="{{ user.email }}" required>
+            </div>
+            <button type="submit">Смени</button>
+        </form>
+    </div>
+
+    <div id="security-container">
+        <h3>Смяна на парола</h3>
+        <form action="{{ url_for('profile') }}" method="POST">
+            <input type="hidden" name="action" value="update_password">
+            
+            <div>
+                <label for="old_password">Стара парола</label>
+                <input type="password" id="old_password" name="old_password" placeholder="Въведете старата парола" required>
+            </div>
+
+            <div>
+                <label for="new_password">Нова парола</label>
+                <input type="password" id="new_password" name="new_password" placeholder="Въведете новата парола" required>
+            </div>
+
+            <div>
+                <label for="confirm_password">Повтори новата парола</label>
+                <input type="password" id="confirm_password" name="confirm_password" placeholder="Повторете новата парола" required>
+            </div>
+
+            <button type="submit">Смени паролата</button>
+        </form>
+    </div>
+
+    <div id="danger-container">
+        <a href="{{ url_for('logout') }}">Изход от профила</a>
+
+        <form action="{{ url_for('logout') }}" method="POST" onsubmit="return confirm('Сигурен ли си, че искаш да си изтриеш профила? Всички твои задачи ще бъдат изтрити завинаги!');">
+            <input type="hidden" name="action" value="delete_account">
+            <button type="submit">Изтрий моя профил</button>
+        </form>
+    </div>
+</main>
 {% endblock %}

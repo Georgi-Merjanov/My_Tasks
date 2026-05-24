@@ -92,13 +92,26 @@ def login():
         return render_template("login.html", error="Грешна парола!")
 
 
+def get_user():
+    user_id=session.get("user_id")
+    user=db.session.execute(db.select(User).filter_by(id=user_id)).scalar_one_or_none()
+    return user
+
+
 @app.route("/profile", methods=["GET", "POST"])
 def profile():
     if(request.method=="GET"):
-        user_id=session.get("user_id")
-        user=db.session.execute(db.select(User).filter_by(id=user_id)).scalar_one_or_none()
-        return render_template("profile.html", user=user)
-    
+        return render_template("profile.html", user=get_user())
+    pass
+
+
+@app.route("/logout", methods=["GET","POST"])
+def logout():
+    if(request.method=="POST"):
+        db.session.delete(get_user())
+        db.session.commit()
+    session.clear()
+    return redirect(url_for("login"))
 
 
 @app.route("/statistics", methods=["GET"])
