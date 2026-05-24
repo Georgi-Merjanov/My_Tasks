@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import String, Integer, Boolean, ForeignKey
-from sqlalchemy.orm import DeclarativeBase, mapped_column, Mapped
+from sqlalchemy.orm import DeclarativeBase, mapped_column, Mapped, relationship
 from flask_migrate import Migrate
 from password import password
 
@@ -25,6 +25,7 @@ class User(Base):
     email: Mapped[str] = mapped_column(String(50), unique=True, nullable=False)
     password: Mapped[str] = mapped_column(String(255), nullable=False)
     profile_picture: Mapped[str] = mapped_column(String(255), nullable=True)
+    tasks: Mapped[list["Task"]] = relationship("Task", back_populates="user", cascade="all, delete-orphan")
 
 
 class Task(Base):
@@ -34,6 +35,7 @@ class Task(Base):
     day_for: Mapped[str] = mapped_column(String(10), nullable=False)
     is_finished: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
     user_id: Mapped[int] = mapped_column(Integer, ForeignKey("Users.id", name="fk_task_user"), nullable=False)
+    user: Mapped["User"] = relationship("User", back_populates="tasks")
 
 
 with app.app_context():
@@ -78,7 +80,7 @@ def login():
     login_username=request.form.get("username")
     login_password=request.form.get("password")
     if(not login_username or not login_password):
-        return render_template("register.html", error="Моля попълнете всички полета!")
+        return render_template("login.html", error="Моля попълнете всички полета!")
     
     user=db.session.execute(db.select(User).filter_by(username=login_username)).scalar_one_or_none()
     if(not user):
@@ -92,7 +94,11 @@ def login():
 
 @app.route("/profile", methods=["GET", "POST"])
 def profile():
-    return render_template("profile.html")
+    if(request.method=="GET"):
+        user_id=session.get("user_id")
+        user=db.session.execute(db.select(User).filter_by(id=user_id)).scalar_one_or_none()
+        return render_template("profile.html", user=user)
+    
 
 
 @app.route("/statistics", methods=["GET"])
