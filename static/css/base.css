@@ -58,8 +58,8 @@ nav #nav-right a.active {
 nav #nav-right img {
   width: 3rem;
   height: 3rem;
-  border: 0.2rem solid rgb(222, 222, 195);
   border-radius: 50%;
   -o-object-fit: cover;
      object-fit: cover;
+  border: none !important;
 }/*# sourceMappingURL=base.css.map */

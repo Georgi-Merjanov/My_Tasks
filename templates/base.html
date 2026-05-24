@@ -22,7 +22,11 @@
             <div id="nav-right">
                 <a href="{{ url_for('statistics') }}" class="{% if(request.path=='/statistics') %} active {% endif %}">Статистики</a>
                 <a href="{{ url_for('profile') }}" class="{% if(request.path=='/profile') %} active {% endif %}">Профил</a>
-                <img src="{{ url_for('static', filename='profile_pictures/default.png') }}">
+                {% if(user and user.profile_picture) %}
+                <img src="{{ url_for('static', filename='profile_pictures/' + user.profile_picture) }}" alt="Профилна снимка">
+                {% else %}
+                <img src="{{ url_for('static', filename='pictures/avatar.png')}}" class="placeholder">
+                {% endif %}
             </div>
         </nav>
     </header>

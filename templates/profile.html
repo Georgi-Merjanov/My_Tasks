@@ -13,7 +13,7 @@
             {% if(user.profile_picture) %}
                 <img src="{{ url_for('static', filename='profile_pictures/' + user.profile_picture) }}" alt="Профилна снимка">
             {% else %}
-                <div class="placeholder">📷</div>
+                <img src="{{ url_for('static', filename='pictures/camera.png')}}" class="placeholder">
             {% endif %}
             <span>Смени снимката</span>
         </label>
@@ -64,12 +64,12 @@
     </div>
 
     <div id="danger-container">
-        <a href="{{ url_for('logout') }}">Изход от профила</a>
-
-        <form action="{{ url_for('logout') }}" method="POST" onsubmit="return confirm('Сигурен ли си, че искаш да си изтриеш профила? Всички твои задачи ще бъдат изтрити завинаги!');">
+        <form action="{{ url_for('logout') }}" method="POST" onsubmit="return confirm('Сигурни ли сте, че искате да изтриете профила си? Всички задачи в него ще бъдат изтрити завинаги!');">
             <input type="hidden" name="action" value="delete_account">
             <button type="submit">Изтрий моя профил</button>
         </form>
+
+        <a href="{{ url_for('logout') }}">Изход от профила</a>
     </div>
 </main>
 {% endblock %}

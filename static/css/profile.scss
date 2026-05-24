@@ -1,3 +1,257 @@
 @import 'base';
 
+$profile-card-bg: $bg-day;
+$danger-bg: #fff5f5;
+$danger-border: #f8d7da;
 
+
+#profile-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5rem;
+    padding: 3rem 1.5rem;
+    background-color: $bg-main;
+    min-height: calc(100vh - 6rem);
+    font-family: sans-serif;
+    color: $text;
+
+    div {
+        background-color: $profile-card-bg;
+        border: 0.06rem solid $border;
+        border-radius: 0.6rem;
+        padding: 2rem;
+        width: 100%;
+        max-width: 38rem;
+        box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.05);
+        box-sizing: border-box;
+    }
+
+    #avatar-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 2.5rem 1.5rem;
+        text-align: center;
+
+        label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+
+            img, .placeholder {
+                width: 10rem;
+                height: 10rem;
+                border-radius: 50%;
+                object-fit: cover;
+                border: 0.25rem solid $primary-main;
+                transition: transform $transition-speed, border-color $transition-speed;
+
+                &:hover{
+                    transform: scale(1.03);
+                    border-color: $primary-hover;
+                }
+            }
+
+            .placeholder {
+                background-color: $bg-main;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 5rem;
+            }
+
+            span {
+                font-size: 0.95rem;
+                font-weight: 600;
+                color: $primary-main;
+                transition: color $transition-speed;
+
+                &:hover{
+                    color: $primary-hover;
+                }
+            }
+        }
+    }
+
+    #info-container {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+
+        form {
+            display: flex;
+            align-items: flex-end;
+            gap: 1rem;
+            width: 100%;
+
+            div {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+                padding: 0;
+                border: none;
+                box-shadow: none;
+                border-radius: 0;
+
+                label {
+                    font-size: 0.9rem;
+                    font-weight: 600;
+                    color: $text-dark;
+                }
+
+                input {
+                    padding: 0.7rem 1rem;
+                    font-size: 1rem;
+                    border: 0.06rem solid $border;
+                    border-radius: 0.4rem;
+                    background-color: $bg-main;
+                    color: $text;
+                    outline: none;
+                    transition: border-color $transition-speed;
+
+                    &:focus {
+                        border-color: $primary-main;
+                    }
+                }
+            }
+
+            button {
+                padding: 0.7rem 1.5rem;
+                font-size: 1rem;
+                font-weight: 600;
+                background-color: $primary-main;
+                color: $bg-day;
+                border: none;
+                border-radius: 0.4rem;
+                cursor: pointer;
+                transition: background-color $transition-speed;
+
+                &:hover {
+                    background-color: $primary-hover;
+                }
+            }
+        }
+    }
+
+    #security-container {
+        h3 {
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            color: $text-dark;
+            border-bottom: 0.06rem solid $border;
+            padding-bottom: 0.5rem;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+
+            div {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+                padding: 0;
+                border: none;
+                box-shadow: none;
+                border-radius: 0;
+
+                label {
+                    font-size: 0.9rem;
+                    font-weight: 600;
+                    color: $text-dark;
+                }
+
+                input {
+                    padding: 0.7rem 1rem;
+                    font-size: 1rem;
+                    border: 0.06rem solid $border;
+                    border-radius: 0.4rem;
+                    background-color: $bg-main;
+                    outline: none;
+                    transition: border-color $transition-speed;
+
+                    &:focus {
+                        border-color: $primary-main;
+                    }
+                }
+            }
+
+            button {
+                margin-top: 0.5rem;
+                padding: 0.8rem;
+                font-size: 1rem;
+                font-weight: 600;
+                background-color: $primary-main;
+                color: $bg-day;
+                border: none;
+                border-radius: 0.4rem;
+                cursor: pointer;
+                transition: background-color $transition-speed;
+
+                &:hover {
+                    background-color: $primary-hover;
+                }
+            }
+        }
+    }
+
+    #danger-container {
+        background-color: $danger-bg;
+        border-color: $danger-border;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+        padding: 2rem;
+
+        a {
+            display: inline-block;
+            text-align: center;
+            text-decoration: none;
+            font-weight: 600;
+            color: $text;
+            padding: 0.6rem 1.2rem;
+            border: 0.06rem solid $border;
+            border-radius: 0.4rem;
+            background-color: $bg-day;
+            width: 100%;
+            max-width: 15rem;
+            box-sizing: border-box;
+            transition: background-color $transition-speed, color $transition-speed;
+
+            &:hover {
+                background-color: $text-dark;
+                color: $bg-day;
+                border-color: $text-dark;
+            }
+        }
+
+        form {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+
+            button {
+                background: none;
+                border: none;
+                color: $delete;
+                font-size: 0.95rem;
+                font-weight: 600;
+                text-decoration: underline;
+                cursor: pointer;
+                transition: color $transition-speed;
+
+                &:hover {
+                    color: darken($delete, 15%);
+                }
+            }
+        }
+    }
+}

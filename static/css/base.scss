@@ -80,9 +80,9 @@ nav {
         img {
             width: 3rem;
             height: 3rem;
-            border: 0.2rem solid rgb(222, 222, 195);;
             border-radius: 50%;
             object-fit: cover;
+            border: none !important;
         }
     }
 }
