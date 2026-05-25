@@ -5,7 +5,7 @@ from sqlalchemy.orm import DeclarativeBase, mapped_column, Mapped, relationship
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_migrate import Migrate
 from password import password
-from datetime import date
+from datetime import date, timedelta
 import os
 
 app=Flask(__name__)
@@ -51,11 +51,58 @@ def get_user():
     return user
 
 
+def date_to_month(month_number):
+    months={
+        1: "Януари", 2: "Февруари", 3: "Март", 4: "Април",
+        5: "Май", 6: "Юни", 7: "Юли", 8: "Август",
+        9: "Септември", 10: "Октомври", 11: "Ноември", 12: "Декември"}
+    return months.get(month_number)
+
+
+def get_current_week():
+    today=date.today()
+    days_after_monday=today.weekday()
+    monday=today-timedelta(days=days_after_monday)
+    days=[]
+    months=[]
+    years=[]
+    for i in range(0,7):
+        days.append(monday+timedelta(days=i))
+    
+    first_day=days[0]
+    last_day=days[6]
+    
+    if(first_day.month==last_day.month):
+        month=date_to_month(first_day.month)
+    else:
+        month=f"{date_to_month(first_day.month)}/{date_to_month(last_day.month)}"
+        
+    if(first_day.year==last_day.year):
+        year=str(first_day.year)
+    else:
+        year=f"{first_day.year}/{last_day.year}"
+
+    dictionary={"monday": days[0],
+          "tuesday": days[1],
+          "wednesday": days[2],
+          "thursday": days[3],
+          "friday": days[4],
+          "saturday": days[5], 
+          "sunday": days[6],
+          "month": month,
+          "year": year}
+    
+    return dictionary
+
+
 @app.route("/", methods=["GET", "POST"])
 def home():
     if("user_id" not in session):
         return redirect(url_for("login"))
-    return render_template("index.html", user=get_user())
+    
+    user=get_user()
+    week=get_current_week
+    return render_template("index.html", user=user, week=week)
 
 
 @app.route("/register", methods=["GET", "POST"])
