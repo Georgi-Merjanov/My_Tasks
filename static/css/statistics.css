@@ -1,3 +1,4 @@
+@charset "UTF-8";
 body {
   margin: 0;
   padding: 0;
@@ -51,11 +52,21 @@ nav #nav-right a {
 nav #nav-right a:hover {
   background-color: rgb(222, 222, 195);
 }
+nav #nav-right a.active {
+  background-color: rgb(222, 222, 195);
+  cursor: default;
+}
 nav #nav-right img {
   width: 3rem;
   height: 3rem;
-  border: 0.2rem solid rgb(222, 222, 195);
   border-radius: 50%;
   -o-object-fit: cover;
      object-fit: cover;
+  border: none !important;
+}
+nav #nav-right img[alt="Профилна снимка"] {
+  border: 0.2rem solid rgb(224, 202, 178) !important;
+}
+nav #nav-right img.placeholder {
+  border: none !important;
 }/*# sourceMappingURL=statistics.css.map */

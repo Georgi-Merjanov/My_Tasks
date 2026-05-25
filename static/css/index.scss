@@ -1,3 +1,117 @@
-@import 'base';
+@import "base";
 
 
+main {
+    background-color: $bg-main;
+    min-height: calc(100vh - 5.5rem);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    box-sizing: border-box;
+
+    > div:first-of-type {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 3rem;
+
+        h2 {
+            font-size: 2rem;
+            color: $text;
+            margin: 0;
+            font-weight: bold;
+            min-width: 15rem;
+            text-align: center;
+        }
+
+        button {
+            background-color: $primary-main;
+            color: white;
+            border: none;
+            font-size: 1.5rem;
+            padding: 0.5rem 1.2rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background-color $transition-speed;
+
+            &:hover {
+                background-color: $primary-hover;
+            }
+        }
+    }
+
+    > div:not(:first-of-type) {
+        display: flex;
+        gap: 1.5rem;
+        width: 100%;
+        box-sizing: border-box;
+
+        > div {
+            background-color: $bg-day;
+            border: 0.2rem solid $border;
+            border-radius: 0.8rem;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 18rem;
+            box-sizing: border-box;
+            box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.02);
+
+            h3 {
+                margin: 0;
+                font-size: 1.3rem;
+                color: $text;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+
+                span {
+                    background-color: $bg-main;
+                    color: $text;
+                    border: 0.08rem solid $border;
+                    font-size: 1.1rem;
+                    padding: 0.3rem 0.6rem;
+                    border-radius: 0.4rem;
+                    min-width: 1.5rem;
+                    text-align: center;
+                }
+            }
+
+            button {
+                color: #fff;
+                background-color: $add;
+                padding: 0.7rem;
+                font-size: 1rem;
+                font-weight: 600;
+                border: none;
+                border-radius: 0.5rem;
+                cursor: pointer;
+                width: 100%;
+                transition: all $transition-speed;
+                margin-top: auto;
+
+                &:hover {
+                    background-color: #2cae62;
+                }
+            }
+        }
+    }
+
+    > div:nth-of-type(2) {
+        > div {
+            flex: 1;
+        }
+    }
+
+    > div:nth-of-type(3) {
+        justify-content: center;
+
+        > div {
+            width: calc((100% - 4.5rem)/4); 
+            flex: none;
+        }
+    }
+}

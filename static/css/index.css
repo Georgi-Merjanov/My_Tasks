@@ -69,4 +69,104 @@ nav #nav-right img[alt="Профилна снимка"] {
 }
 nav #nav-right img.placeholder {
   border: none !important;
+}
+
+main {
+  background-color: #fdfaf1;
+  min-height: calc(100vh - 5.5rem);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  box-sizing: border-box;
+}
+main > div:first-of-type {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+}
+main > div:first-of-type h2 {
+  font-size: 2rem;
+  color: #2c3e50;
+  margin: 0;
+  font-weight: bold;
+  min-width: 15rem;
+  text-align: center;
+}
+main > div:first-of-type button {
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  font-size: 1.5rem;
+  padding: 0.5rem 1.2rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+main > div:first-of-type button:hover {
+  background-color: #7cb5f9;
+}
+main > div:not(:first-of-type) {
+  display: flex;
+  gap: 1.5rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+main > div:not(:first-of-type) > div {
+  background-color: #ffffff;
+  border: 0.2rem solid #e0d7c1;
+  border-radius: 0.8rem;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 18rem;
+  box-sizing: border-box;
+  box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.02);
+}
+main > div:not(:first-of-type) > div h3 {
+  margin: 0;
+  font-size: 1.3rem;
+  color: #2c3e50;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+main > div:not(:first-of-type) > div h3 span {
+  background-color: #fdfaf1;
+  color: #2c3e50;
+  border: 0.08rem solid #e0d7c1;
+  font-size: 1.1rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 0.4rem;
+  min-width: 1.5rem;
+  text-align: center;
+}
+main > div:not(:first-of-type) > div button {
+  color: #fff;
+  background-color: #2ecc71;
+  padding: 0.7rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.3s;
+  margin-top: auto;
+}
+main > div:not(:first-of-type) > div button:hover {
+  background-color: #2cae62;
+}
+main > div:nth-of-type(2) > div {
+  flex: 1;
+}
+main > div:nth-of-type(3) {
+  justify-content: center;
+}
+main > div:nth-of-type(3) > div {
+  width: calc((100% - 4.5rem) / 4);
+  flex: none;
 }/*# sourceMappingURL=index.css.map */
