@@ -101,7 +101,7 @@ def home():
         return redirect(url_for("login"))
     
     user=get_user()
-    week=get_current_week
+    week=get_current_week()
     return render_template("index.html", user=user, week=week)
 
 

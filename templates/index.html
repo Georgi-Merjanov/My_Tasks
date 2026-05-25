@@ -8,5 +8,45 @@
 
 
 {% block body %}
-<h1>Задачите</h1>
+<main>
+    <div>
+        <button>&lt;</button>
+        <h2>{{ week["month"] }} {{ week["year"] }}</h2>
+        <button>&gt;</button>
+    </div>
+
+    <div>
+        <div>
+            <h3>Понеделник <span>{{ week["monday"].day }}</span></h3>
+            <button>+ Добави задача</button>
+        </div>
+        <div>
+            <h3>Вторник <span>{{ week["tuesday"].day }}</span></h3>
+            <button>+ Добави задача</button>
+        </div>
+        <div>
+            <h3>Сряда <span>{{ week["wednesday"].day }}</span></h3>
+            <button>+ Добави задача</button>
+        </div>
+        <div>
+            <h3>Четвъртък <span>{{ week["thursday"].day }}</span></h3>
+            <button>+ Добави задача</button>
+        </div>
+    </div>
+
+    <div>
+        <div>
+            <h3>Петък <span>{{ week["friday"].day }}</span></h3>
+            <button>+ Добави задача</button>
+        </div>
+        <div>
+            <h3>Събота <span>{{ week["saturday"].day }}</span></h3>
+            <button>+ Добави задача</button>
+        </div>
+        <div>
+            <h3>Неделя <span>{{ week["sunday"].day }}</span></h3>
+            <button>+ Добави задача</button>
+        </div>
+    </div>
+</main>
 {% endblock %}
