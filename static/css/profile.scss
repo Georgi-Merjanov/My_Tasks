@@ -225,7 +225,7 @@ $danger-border: #f8d7da;
     }
 
     #danger-container {
-        background-color: $danger-bg;
+        background-color: #fff;
         border-color: $danger-border;
         display: flex;
         flex-direction: column;
@@ -242,7 +242,7 @@ $danger-border: #f8d7da;
             padding: 0.6rem 1.2rem;
             border: 0.06rem solid $border;
             border-radius: 0.4rem;
-            background-color: $bg-day;
+            background-color: $bg-main;
             width: 100%;
             max-width: 15rem;
             box-sizing: border-box;

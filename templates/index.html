@@ -10,40 +10,43 @@
 {% block body %}
 <main>
     <div>
-        <button>&lt;</button>
-        <h2>{{ week["month"] }} {{ week["year"] }}</h2>
-        <button>&gt;</button>
+        <a href="{{ url_for('home', offset=offset-1) }}">&lt;</a>
+        <h2>
+            <span style="margin-right: 2rem;">{{ week["month"] }}</span>
+            <span>{{ week["year"] }}г.</span>
+        </h2>
+        <a href="{{ url_for('home', offset=offset+1) }}">&gt;</a>
     </div>
 
     <div>
-        <div>
+        <div id="{% if(week['monday']==today) %}today-box{% endif %}">
             <h3>Понеделник <span>{{ week["monday"].day }}</span></h3>
             <button>+ Добави задача</button>
         </div>
-        <div>
+        <div id="{% if(week['tuesday']==today) %}today-box{% endif %}">
             <h3>Вторник <span>{{ week["tuesday"].day }}</span></h3>
             <button>+ Добави задача</button>
         </div>
-        <div>
+        <div id="{% if(week['wednesday']==today) %}today-box{% endif %}">
             <h3>Сряда <span>{{ week["wednesday"].day }}</span></h3>
             <button>+ Добави задача</button>
         </div>
-        <div>
+        <div id="{% if(week['thursday']==today) %}today-box{% endif %}">
             <h3>Четвъртък <span>{{ week["thursday"].day }}</span></h3>
             <button>+ Добави задача</button>
         </div>
     </div>
 
     <div>
-        <div>
+        <div id="{% if(week['friday']==today) %}today-box{% endif %}">
             <h3>Петък <span>{{ week["friday"].day }}</span></h3>
             <button>+ Добави задача</button>
         </div>
-        <div>
+        <div id="{% if(week['saturday']==today) %}today-box{% endif %}">
             <h3>Събота <span>{{ week["saturday"].day }}</span></h3>
             <button>+ Добави задача</button>
         </div>
-        <div>
+        <div id="{% if(week['sunday']==today) %}today-box{% endif %}">
             <h3>Неделя <span>{{ week["sunday"].day }}</span></h3>
             <button>+ Добави задача</button>
         </div>

@@ -263,7 +263,7 @@ nav #nav-right img.placeholder {
   background-color: #7cb5f9;
 }
 #profile-page #danger-container {
-  background-color: #fff5f5;
+  background-color: #fff;
   border-color: #f8d7da;
   display: flex;
   flex-direction: column;
@@ -280,7 +280,7 @@ nav #nav-right img.placeholder {
   padding: 0.6rem 1.2rem;
   border: 0.06rem solid #e0d7c1;
   border-radius: 0.4rem;
-  background-color: #ffffff;
+  background-color: #fdfaf1;
   width: 100%;
   max-width: 15rem;
   box-sizing: border-box;

@@ -59,13 +59,11 @@ def date_to_month(month_number):
     return months.get(month_number)
 
 
-def get_current_week():
-    today=date.today()
-    days_after_monday=today.weekday()
-    monday=today-timedelta(days=days_after_monday)
+def get_current_week(offset=0):
+    target_date=date.today()+timedelta(weeks=offset)
+    days_after_monday=target_date.weekday()
+    monday=target_date-timedelta(days=days_after_monday)
     days=[]
-    months=[]
-    years=[]
     for i in range(0,7):
         days.append(monday+timedelta(days=i))
     
@@ -87,7 +85,7 @@ def get_current_week():
           "wednesday": days[2],
           "thursday": days[3],
           "friday": days[4],
-          "saturday": days[5], 
+          "saturday": days[5],
           "sunday": days[6],
           "month": month,
           "year": year}
@@ -100,9 +98,10 @@ def home():
     if("user_id" not in session):
         return redirect(url_for("login"))
     
+    offset=request.args.get("offset", type=int, default=0)
     user=get_user()
-    week=get_current_week()
-    return render_template("index.html", user=user, week=week)
+    week=get_current_week(offset)
+    return render_template("index.html", user=user, week=week, offset=offset, today=date.today())
 
 
 @app.route("/register", methods=["GET", "POST"])

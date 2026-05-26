@@ -12,20 +12,26 @@ main {
 
     > div:first-of-type {
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
         align-items: center;
-        gap: 3rem;
+        width: 100%;
+        max-width: 44rem;
+        margin: 0 auto;
 
         h2 {
             font-size: 2rem;
             color: $text;
             margin: 0;
             font-weight: bold;
-            min-width: 15rem;
+            flex: 1;
             text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        button {
+        a {
+            text-decoration: none;
             background-color: $primary-main;
             color: white;
             border: none;
@@ -34,6 +40,9 @@ main {
             border-radius: 0.5rem;
             cursor: pointer;
             transition: background-color $transition-speed;
+            width: 1.5rem;
+            text-align: center;
+            flex-shrink: 0;
 
             &:hover {
                 background-color: $primary-hover;
@@ -113,5 +122,15 @@ main {
             width: calc((100% - 4.5rem)/4); 
             flex: none;
         }
+    }
+}
+
+
+#today-box {
+    background-color: #eafbfa;
+    border-color: #9b9485;
+
+    span{
+        border-color: #9b9485;
     }
 }
