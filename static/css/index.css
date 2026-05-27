@@ -167,7 +167,7 @@ main > div:not(:first-of-type) > div button {
   margin-top: auto;
 }
 main > div:not(:first-of-type) > div button:hover {
-  background-color: #2cae62;
+  background-color: #289d59;
 }
 main > div:nth-of-type(2) > div {
   flex: 1;
