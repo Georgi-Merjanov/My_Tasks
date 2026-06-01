@@ -152,6 +152,7 @@ main h3 {
   border-radius: 0.5rem;
   width: 100%;
   margin-top: 1.5rem;
+  text-align: center;
 }
 main p {
   margin-top: 2rem;
@@ -164,4 +165,8 @@ main p a {
 }
 main p a:hover {
   text-decoration: underline;
+}
+
+.display_none {
+  display: none;
 }/*# sourceMappingURL=login_and_register.css.map */

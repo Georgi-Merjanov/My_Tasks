@@ -28,7 +28,7 @@
 
         <input type="submit" value="Регистрирай се">
     </form>
-    <h3 id="error_message"></h3>
+    <h3 id="error_message" class="display_none"></h3>
 
     <p>Вече имаш профил? <a href="{{ url_for('login') }}">Влез тук</a></p>
 </main>
@@ -64,6 +64,7 @@
             {if(res.status===201)
                 {window.location.href="/login";}
             else
-                {error_box.textContent = res.body.error;}});});
+                {error_box.textContent = res.body.error;
+                error_box.classList.remove("display_none");}});});
 </script>
 {% endblock %}

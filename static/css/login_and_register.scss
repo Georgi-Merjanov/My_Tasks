@@ -95,6 +95,7 @@ main {
         border-radius: 0.5rem;
         width: 100%;
         margin-top: 1.5rem;
+        text-align: center;
     }
 
     p {
@@ -111,4 +112,9 @@ main {
             }
         }
     }
+}
+
+
+.display_none{
+    display: none;
 }
