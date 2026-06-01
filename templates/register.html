@@ -28,9 +28,7 @@
 
         <input type="submit" value="Регистрирай се">
     </form>
-    {% if(error) %}
-    <h3>{{ error }}</h3>
-    {% endif %}
+    <h3 id="error_message"></h3>
 
     <p>Вече имаш профил? <a href="{{ url_for('login') }}">Влез тук</a></p>
 </main>
@@ -43,5 +41,29 @@
         {const type_to_change = password_field.getAttribute("type") === "password" ? "text" : "password";
         password_field.setAttribute("type", type_to_change);
         toggle_password.classList.toggle("fa-eye-slash");});
+
+    document.querySelector("form").addEventListener("submit", (e) =>
+        {e.preventDefault();
+        
+        const error_box = document.getElementById("error_message");
+        error_box.textContent = "";
+        
+        const username_input = document.querySelector('input[name="username"]').value;
+        const email_input = document.querySelector('input[name="email"]').value;
+        const password_input = document.querySelector('input[name="password"]').value;
+        
+        fetch("/register", 
+            {method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(
+                {username: username_input,
+                email: email_input,
+                password: password_input})})
+        .then((response) => response.json().then((data) => ({status: response.status, body: data})))
+        .then((res) =>
+            {if(res.status===201)
+                {window.location.href="/login";}
+            else
+                {error_box.textContent = res.body.error;}});});
 </script>
 {% endblock %}

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_migrate import Migrate
 from password import password
@@ -82,27 +82,31 @@ def register():
     if(request.method=="GET"):
         return render_template("register.html")
     
-    new_username=request.form.get("username")
-    new_email=request.form.get("email")
-    new_password=request.form.get("password")
+    data=request.get_json()
+    if(not data):
+        return jsonify({"error": "Невалиден JSON формат"}), 400
+    
+    new_username=data.get("username")
+    new_email=data.get("email")
+    new_password=data.get("password")
 
     if(not new_username or not new_email or not new_password):
-        return render_template("register.html", error="Моля попълнете всички полета!")
+        return jsonify({"error": "Моля попълнете всички полета!"}), 400
     
     if(len(new_password)<10):
-        return render_template("register.html", error="Паролата трябва да е поне 10 символа!")
+        return jsonify({"error": "Паролата трябва да е поне 10 символа!"}), 400
     
     if(db.session.execute(db.select(User).filter_by(username=new_username)).scalar_one_or_none()):
-        return render_template("register.html", error="Това потребителско име вече е заето!")
+        return jsonify({"error": "Това потребителско име вече е заето!"}), 400
     
     if(db.session.execute(db.select(User).filter_by(email=new_email)).scalar_one_or_none()):
-        return render_template("register.html", error="Този имейл вече е зает!")
+        return jsonify({"error": "Този имейл вече е зает!"}), 400
     
     hashed_password=generate_password_hash(new_password)
     new_user=User(username=new_username, email=new_email, password=hashed_password)
     db.session.add(new_user)
     db.session.commit()
-    return redirect(url_for("login"))
+    return jsonify({"success": "Успешна регистрация!"}), 201
 
 
 @app.route("/login", methods=["GET", "POST"])
