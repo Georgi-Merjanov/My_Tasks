@@ -224,7 +224,7 @@ $danger-border: #f8d7da;
         }
     }
 
-    #danger-container {
+#danger-container {
         background-color: #fff;
         border-color: $danger-border;
         display: flex;
@@ -233,10 +233,12 @@ $danger-border: #f8d7da;
         gap: 1.5rem;
         padding: 2rem;
 
-        a {
+        #logout-button {
             display: inline-block;
             text-align: center;
             text-decoration: none;
+            font-family: sans-serif;
+            font-size: 1rem;
             font-weight: 600;
             color: $text;
             padding: 0.6rem 1.2rem;
@@ -246,7 +248,8 @@ $danger-border: #f8d7da;
             width: 100%;
             max-width: 15rem;
             box-sizing: border-box;
-            transition: background-color $transition-speed, color $transition-speed;
+            cursor: pointer;
+            transition: background-color $transition-speed, color $transition-speed, border-color $transition-speed;
 
             &:hover {
                 background-color: $text-dark;
@@ -255,24 +258,19 @@ $danger-border: #f8d7da;
             }
         }
 
-        form {
-            width: 100%;
-            display: flex;
-            justify-content: center;
+        #delete-account-button {
+            background: none;
+            border: none;
+            color: $delete;
+            font-family: sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: underline;
+            cursor: pointer;
+            transition: color $transition-speed;
 
-            button {
-                background: none;
-                border: none;
-                color: $delete;
-                font-size: 0.95rem;
-                font-weight: 600;
-                text-decoration: underline;
-                cursor: pointer;
-                transition: color $transition-speed;
-
-                &:hover {
-                    color: darken($delete, 15%);
-                }
+            &:hover {
+                color: darken($delete, 15%);
             }
         }
     }

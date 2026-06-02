@@ -139,6 +139,9 @@ def login():
 
 @app.route("/profile", methods=["GET", "POST"])
 def profile():
+    if("user_id" not in session):
+        return jsonify({"error": "Нямате достъп!"}), 401
+    
     if(request.method=="GET"):
         return render_template("profile.html", user=get_user())
     
@@ -207,13 +210,30 @@ def profile():
         return render_template("profile.html", user=user, success_password="Успешно променихте паролата си!")
 
 
-@app.route("/logout", methods=["GET","POST"])
+@app.route("/logout", methods=["POST"])
 def logout():
-    if(request.method=="POST"):
-        db.session.delete(get_user())
-        db.session.commit()
+    if("user_id" not in session):
+        return jsonify({"error": "Нямате достъп!"}), 401
     session.clear()
-    return redirect(url_for("login"))
+    return "", 204
+
+
+@app.route("/users/<int:user_id>", methods=["DELETE"])
+def delete_user(user_id):
+    if("user_id" not in session):
+        return jsonify({"error": "Не сте удостоверен!"}), 401
+    
+    if(session["user_id"]!=user_id):
+        return jsonify({"error": "Нямате привилегии за това действие!"}), 403
+
+    user=get_user()
+    if(not user):
+        return jsonify({"error": "Потребителят не е намерен!"}), 404
+
+    db.session.delete(user)
+    db.session.commit()
+    session.clear()
+    return "", 204
 
 
 @app.route("/statistics", methods=["GET"])
