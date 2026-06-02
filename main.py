@@ -114,23 +114,27 @@ def login():
     if(request.method=="GET"):
         return render_template("login.html")
 
-    login_username=request.form.get("username")
-    login_password=request.form.get("password")
+    data=request.get_json()
+    if(not data):
+        return jsonify({"error": "Невалиден JSON формат"}), 400
+
+    login_username=data.get("username")
+    login_password=data.get("password")
 
     if(not login_username or not login_password):
-        return render_template("login.html", error="Моля попълнете всички полета!")
+        return jsonify({"error": "Моля попълнете всички полета!"}), 400
     
     if(len(login_password)<10):
-        return render_template("login.html", error="Паролата трябва да е поне 10 символа!")
+        return jsonify({"error": "Паролата трябва да е поне 10 символа!"}), 400
     
     user=db.session.execute(db.select(User).filter_by(username=login_username)).scalar_one_or_none()
     if(not user):
-        return render_template("login.html", error="Грешно потребителско име!")
+        return jsonify({"error": "Грешно потребителско име!"}), 400
     if(check_password_hash(user.password, login_password)):
         session["user_id"]=user.id
-        return redirect(url_for("home"))
+        return jsonify({"success": "Успешен вход!"}), 200
     else:
-        return render_template("login.html", error="Грешна парола!")
+        return jsonify({"error": "Грешна парола!"}), 400
 
 
 @app.route("/profile", methods=["GET", "POST"])

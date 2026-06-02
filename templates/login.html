@@ -23,9 +23,7 @@
 
         <input type="submit" value="Вход">
     </form>
-    {% if(error) %}
-    <h3>{{ error }}</h3>
-    {% endif %}
+    <h3 id="error_message" class="display_none"></h3>
 
     <p>Нямаш профил? <a href="{{ url_for('register') }}">Регистрирай се тук</a></p>
 </main>
@@ -38,5 +36,28 @@
         {const type_to_change = password_field.getAttribute("type") === "password" ? "text" : "password";
         password_field.setAttribute("type", type_to_change);
         toggle_password.classList.toggle("fa-eye-slash");});
+    
+    document.querySelector("form").addEventListener("submit", (e) =>
+        {e.preventDefault();
+        
+        const error_box = document.getElementById("error_message");
+        error_box.textContent = "";
+        
+        const username_input = document.querySelector('input[name="username"]').value;
+        const password_input = document.querySelector('input[name="password"]').value;
+        
+        fetch("/login", 
+            {method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(
+                {username: username_input,
+                password: password_input})})
+        .then((response) => response.json().then((data) => ({status: response.status, body: data})))
+        .then((result) =>
+            {if(result.status===200)
+                {window.location.href="/";}
+            else
+                {error_box.textContent = result.body.error;
+                error_box.classList.remove("display_none");}});});
 </script>
 {% endblock %}

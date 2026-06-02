@@ -60,11 +60,11 @@
                 email: email_input,
                 password: password_input})})
         .then((response) => response.json().then((data) => ({status: response.status, body: data})))
-        .then((res) =>
-            {if(res.status===201)
+        .then((result) =>
+            {if(result.status===201)
                 {window.location.href="/login";}
             else
-                {error_box.textContent = res.body.error;
+                {error_box.textContent = result.body.error;
                 error_box.classList.remove("display_none");}});});
 </script>
 {% endblock %}
