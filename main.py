@@ -137,6 +137,75 @@ def login():
         return jsonify({"error": "Грешна парола!"}), 400
 
 
+@app.route("/logout", methods=["POST"])
+def logout():
+    if("user_id" not in session):
+        return jsonify({"error": "Нямате достъп!"}), 401
+    session.clear()
+    return "", 204
+
+
+@app.route("/users/<int:user_id>", methods=["DELETE"])
+def delete_user(user_id):
+    if("user_id" not in session):
+        return jsonify({"error": "Не сте удостоверен!"}), 401
+    
+    if(session["user_id"]!=user_id):
+        return jsonify({"error": "Нямате привилегии за това действие!"}), 403
+
+    user=get_user()
+    if(not user):
+        return jsonify({"error": "Потребителят не е намерен!"}), 404
+
+    db.session.delete(user)
+    db.session.commit()
+    session.clear()
+    return "", 204
+
+
+@app.route("/users/<int:user_id>/avatar", methods=["PATCH"])
+def update_avatar(user_id):
+    if("user_id" not in session):
+        return jsonify({"error": "Не сте удостоверен!"}), 401
+        
+    if(session["user_id"]!=user_id):
+        return jsonify({"error": "Нямате привилегии за това действие!"}), 403
+
+    user=get_user()
+    if(not user):
+        return jsonify({"error": "Потребителят не е намерен!"}), 404
+
+    if(request.is_json):
+        data=request.get_json()
+        if("profile_picture" in data and data.get("profile_picture") is None):
+            if(user.profile_picture):
+                file_path = os.path.join(app.root_path, "static", "profile_pictures", user.profile_picture)
+                if(os.path.exists(file_path)):
+                    os.remove(file_path)
+            
+            user.profile_picture=None
+            db.session.commit()
+            
+            return jsonify({"success": "Снимката беше премахната успешно!"}), 200
+
+    if('profile_picture' in request.files):
+        file=request.files['profile_picture']
+        
+        if(file.filename == ''):
+            return jsonify({"error": "Не е избран валиден файл!"}), 400
+            
+        file.filename = f"{user.id}.png"
+        path = os.path.join(app.root_path, "static", "profile_pictures", file.filename)
+        file.save(path)
+        
+        user.profile_picture = file.filename
+        db.session.commit()
+        
+        return jsonify({"success": "Снимката беше обновена успешно!"}), 200
+
+    return jsonify({"error": "Невалиден формат на данните!"}), 400
+
+
 @app.route("/profile", methods=["GET", "POST"])
 def profile():
     if("user_id" not in session):
@@ -147,25 +216,8 @@ def profile():
     
     user=get_user()
     action=request.form.get("action")
-
-    if(action=="update_avatar"):
-        file=request.files.get("profile_picture")
-        file.filename=f"{user.id}.png"
-        path=os.path.join(app.root_path, "static", "profile_pictures", file.filename)
-        file.save(path)
-        user.profile_picture=file.filename
-        db.session.commit()
-        return redirect(url_for('profile'))
     
-    elif(action=="remove_avatar"):
-        file_path=os.path.join(app.root_path, "static", "profile_pictures", user.profile_picture)
-        if(os.path.exists(file_path)):
-            os.remove(file_path)
-        user.profile_picture=None
-        db.session.commit()
-        return redirect(url_for('profile'))
-    
-    elif(action=="update_username"):
+    if(action=="update_username"):
         new_username=request.form.get("username")
         if(new_username==user.username):
             return redirect(url_for('profile'))
@@ -208,32 +260,6 @@ def profile():
         user.password=hashed_password
         db.session.commit()
         return render_template("profile.html", user=user, success_password="Успешно променихте паролата си!")
-
-
-@app.route("/logout", methods=["POST"])
-def logout():
-    if("user_id" not in session):
-        return jsonify({"error": "Нямате достъп!"}), 401
-    session.clear()
-    return "", 204
-
-
-@app.route("/users/<int:user_id>", methods=["DELETE"])
-def delete_user(user_id):
-    if("user_id" not in session):
-        return jsonify({"error": "Не сте удостоверен!"}), 401
-    
-    if(session["user_id"]!=user_id):
-        return jsonify({"error": "Нямате привилегии за това действие!"}), 403
-
-    user=get_user()
-    if(not user):
-        return jsonify({"error": "Потребителят не е намерен!"}), 404
-
-    db.session.delete(user)
-    db.session.commit()
-    session.clear()
-    return "", 204
 
 
 @app.route("/statistics", methods=["GET"])

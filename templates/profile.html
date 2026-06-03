@@ -9,25 +9,19 @@
 {% block body %}
 <main id="profile-page">
     <div id="avatar-container">
-        <form action="{{ url_for('profile') }}" method="POST" enctype="multipart/form-data">
-            <input type="hidden" name="action" value="update_avatar">
-            <input type="file" id="avatar-input" name="profile_picture" accept="image/*" style="display: none;" onchange="this.form.submit()">
-            
-            <label for="avatar-input">
-                {% if(user.profile_picture) %}
-                    <img src="{{ url_for('static', filename='profile_pictures/' + user.profile_picture) }}" style="border: 0.25rem solid rgb(221, 221, 150);" alt="Профилна снимка">
-                {% else %}
-                    <img src="{{ url_for('static', filename='pictures/camera.png')}}" class="placeholder">
-                {% endif %}
-                <span>Смени снимката</span>
-            </label>
-        </form>
+        <input type="file" id="avatar-input" name="profile_picture" accept="image/*" style="display: none;">
+        
+        <label for="avatar-input">
+            {% if(user.profile_picture) %}
+                <img src="{{ url_for('static', filename='profile_pictures/' + user.profile_picture) }}" style="border: 0.25rem solid rgb(221, 221, 150);" alt="Профилна снимка">
+            {% else %}
+                <img src="{{ url_for('static', filename='pictures/camera.png')}}" class="placeholder">
+            {% endif %}
+            <span>Смени снимката</span>
+        </label>
 
         {% if user.profile_picture %}
-        <form action="{{ url_for('profile') }}" method="POST">
-            <input type="hidden" name="action" value="remove_avatar">
-            <button type="submit" id="delete-avatar-btn">Премахни снимката</button>
-        </form>
+            <button id="delete-avatar-button">Премахни снимката</button>
         {% endif %}
     </div>
 
@@ -118,18 +112,46 @@
             password_field.setAttribute("type", type_to_change);
             toggle_password.classList.toggle("fa-eye-slash");});});
     
+
+    const avatar_input = document.getElementById("avatar-input");
+    const delete_avatar_button = document.getElementById("delete-avatar-button");
+
+    avatar_input.addEventListener("change", () =>
+        {const file = avatar_input.files[0];
+        if(!file) return;
+
+        const form_data = new FormData();
+        form_data.append("profile_picture", file);
+
+        fetch("/users/{{ user.id }}/avatar", {method: "PATCH", body: form_data})
+        .then((response) => response.json().then((data) =>
+            {if(response.status===200)
+                {window.location.reload();}
+            else
+                {alert(data.error);}}));});
+
+    if(delete_avatar_button)
+        {delete_avatar_button.addEventListener("click", () =>
+            {fetch("/users/{{ user.id }}/avatar",
+                {method: "PATCH",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({"profile_picture": null})})
+            .then((response) => response.json().then((data) =>
+                {if(response.status===200)
+                    {window.location.reload();}
+                else
+                    {alert(data.error);}}));});}
+    
+    
     document.getElementById("logout-button").addEventListener("click", (e) =>
-        {e.preventDefault();
-        
-        fetch("/logout", {method: "POST"})
+        {fetch("/logout", {method: "POST"})
         .then((response) =>
             {if(response.status===204)
                 {window.location.href="/login";}});});
     
+    
     document.getElementById("delete-account-button").addEventListener("click", (e) =>
-        {e.preventDefault();
-        
-        if(confirm('Сигурни ли сте, че искате да изтриете профила си? Всички задачи в него ще бъдат изтрити завинаги!'))
+        {if(confirm('Сигурни ли сте, че искате да изтриете профила си? Всички задачи в него ще бъдат изтрити завинаги!'))
             {fetch("/users/{{user.id}}", {method: "DELETE"})
             .then((response) =>
                 {if(response.status===204)

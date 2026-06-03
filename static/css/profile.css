@@ -135,7 +135,7 @@ nav #nav-right img.placeholder {
 #profile-page #avatar-container label span:hover {
   color: #7cb5f9;
 }
-#profile-page #avatar-container #delete-avatar-btn {
+#profile-page #avatar-container #delete-avatar-button {
   background-color: transparent;
   color: #e74c3c;
   border: 0.06rem solid #e74c3c;
@@ -147,12 +147,12 @@ nav #nav-right img.placeholder {
   cursor: pointer;
   transition: all 0.3s ease;
 }
-#profile-page #avatar-container #delete-avatar-btn:hover {
+#profile-page #avatar-container #delete-avatar-button:hover {
   background-color: #e74c3c;
   color: #fff;
   box-shadow: 0 0.2rem 0.5rem rgba(231, 76, 60, 0.3);
 }
-#profile-page #avatar-container #delete-avatar-btn:active {
+#profile-page #avatar-container #delete-avatar-button:active {
   transform: scale(0.98);
 }
 #profile-page #info-container {
