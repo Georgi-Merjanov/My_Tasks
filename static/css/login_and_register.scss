@@ -1,9 +1,5 @@
 @import 'base';
 
-$primary: #4a90e2;
-$error: #e74c3c;
-$bg: #fdfaf1;
-
 
 main {
     display: flex;
@@ -11,7 +7,7 @@ main {
     align-items: center;
     justify-content: center;
     min-height: calc(100vh - 100px);
-    background-color: $bg;
+    background-color: $bg-main;
     background: white;
     width: 100%;
     max-width: 400px;
@@ -55,7 +51,7 @@ main {
 
                 &:focus {
                     outline: none;
-                    border-color: $primary;
+                    border-color: $primary-main;
                 }
             }
 
@@ -69,7 +65,7 @@ main {
         }
 
         input[type="submit"] {
-            background-color: $primary;
+            background-color: $primary-main;
             color: white;
             border: none;
             padding: 1rem;
@@ -81,16 +77,16 @@ main {
             margin-top: 1rem;
 
             &:hover {
-                background-color: darken($primary, 10%);
+                background-color: darken($primary-main, 10%);
                 transform: translateY(-2px);
             }
         }
     }
 
     h3 {
-        color: $error;
+        color: $delete;
         font-size: 0.9rem;
-        background: rgba($error, 0.1);
+        background: rgba($delete, 0.1);
         padding: 0.8rem;
         border-radius: 0.5rem;
         width: 100%;
@@ -103,7 +99,7 @@ main {
         color: #666;
 
         a {
-            color: $primary;
+            color: $primary-main;
             text-decoration: none;
             font-weight: bold;
 

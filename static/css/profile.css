@@ -160,13 +160,17 @@ nav #nav-right img.placeholder {
   flex-direction: column;
   gap: 1.5rem;
 }
-#profile-page #info-container form {
+#profile-page #info-container .info-row {
   display: flex;
   align-items: flex-end;
   gap: 1rem;
   width: 100%;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
 }
-#profile-page #info-container form div {
+#profile-page #info-container .info-row div {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -175,13 +179,14 @@ nav #nav-right img.placeholder {
   border: none;
   box-shadow: none;
   border-radius: 0;
+  background-color: transparent;
 }
-#profile-page #info-container form div label {
+#profile-page #info-container .info-row div label {
   font-size: 0.9rem;
   font-weight: 600;
   color: #333;
 }
-#profile-page #info-container form div input {
+#profile-page #info-container .info-row div input {
   padding: 0.7rem 1rem;
   font-size: 1rem;
   border: 0.06rem solid #e0d7c1;
@@ -191,10 +196,10 @@ nav #nav-right img.placeholder {
   outline: none;
   transition: border-color 0.3s;
 }
-#profile-page #info-container form div input:focus {
+#profile-page #info-container .info-row div input:focus {
   border-color: #4a90e2;
 }
-#profile-page #info-container form button {
+#profile-page #info-container .info-row button {
   padding: 0.7rem 1.5rem;
   font-size: 1rem;
   font-weight: 600;
@@ -205,23 +210,23 @@ nav #nav-right img.placeholder {
   cursor: pointer;
   transition: background-color 0.3s;
 }
-#profile-page #info-container form button:hover {
+#profile-page #info-container .info-row button:hover {
   background-color: #7cb5f9;
+}
+#profile-page #security-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
 }
 #profile-page #security-container h3 {
   margin-top: 0;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.3rem;
   font-size: 1.3rem;
   color: #333;
   border-bottom: 0.06rem solid #e0d7c1;
   padding-bottom: 0.5rem;
 }
-#profile-page #security-container form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-}
-#profile-page #security-container form div {
+#profile-page #security-container .password-field-group {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -229,13 +234,14 @@ nav #nav-right img.placeholder {
   border: none;
   box-shadow: none;
   border-radius: 0;
+  background-color: transparent;
 }
-#profile-page #security-container form div label {
+#profile-page #security-container .password-field-group label {
   font-size: 0.9rem;
   font-weight: 600;
   color: #333;
 }
-#profile-page #security-container form div input {
+#profile-page #security-container .password-field-group input {
   padding: 0.7rem 1rem;
   font-size: 1rem;
   border: 0.06rem solid #e0d7c1;
@@ -244,10 +250,10 @@ nav #nav-right img.placeholder {
   outline: none;
   transition: border-color 0.3s;
 }
-#profile-page #security-container form div input:focus {
+#profile-page #security-container .password-field-group input:focus {
   border-color: #4a90e2;
 }
-#profile-page #security-container form button {
+#profile-page #security-container button {
   margin-top: 0.5rem;
   padding: 0.8rem;
   font-size: 1rem;
@@ -259,7 +265,7 @@ nav #nav-right img.placeholder {
   cursor: pointer;
   transition: background-color 0.3s;
 }
-#profile-page #security-container form button:hover {
+#profile-page #security-container button:hover {
   background-color: #7cb5f9;
 }
 #profile-page #danger-container {
@@ -326,4 +332,27 @@ nav #nav-right img.placeholder {
   color: #888;
   font-size: 1rem;
   transition: color 0.2s;
+}
+
+.display_none {
+  display: none;
+}
+
+.message-base, .success, .error {
+  font-size: 0.9rem;
+  padding: 0.8rem;
+  border-radius: 0.5rem;
+  width: 100%;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.error {
+  color: #e74c3c !important;
+  background: rgba(231, 76, 60, 0.1);
+}
+
+.success {
+  color: #2ecc71 !important;
+  background: rgba(46, 204, 113, 0.1);
 }/*# sourceMappingURL=profile.css.map */

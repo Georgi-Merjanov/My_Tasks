@@ -137,36 +137,18 @@ def login():
         return jsonify({"error": "Грешна парола!"}), 400
 
 
-@app.route("/logout", methods=["POST"])
-def logout():
+@app.route("/profile", methods=["GET"])
+def profile():
     if("user_id" not in session):
         return jsonify({"error": "Нямате достъп!"}), 401
-    session.clear()
-    return "", 204
-
-
-@app.route("/users/<int:user_id>", methods=["DELETE"])
-def delete_user(user_id):
-    if("user_id" not in session):
-        return jsonify({"error": "Не сте удостоверен!"}), 401
     
-    if(session["user_id"]!=user_id):
-        return jsonify({"error": "Нямате привилегии за това действие!"}), 403
-
-    user=get_user()
-    if(not user):
-        return jsonify({"error": "Потребителят не е намерен!"}), 404
-
-    db.session.delete(user)
-    db.session.commit()
-    session.clear()
-    return "", 204
+    return render_template("profile.html", user=get_user())
 
 
 @app.route("/users/<int:user_id>/avatar", methods=["PATCH"])
 def update_avatar(user_id):
     if("user_id" not in session):
-        return jsonify({"error": "Не сте удостоверен!"}), 401
+        return jsonify({"error": "Не сте удостоверен в системата!"}), 401
         
     if(session["user_id"]!=user_id):
         return jsonify({"error": "Нямате привилегии за това действие!"}), 403
@@ -206,60 +188,133 @@ def update_avatar(user_id):
     return jsonify({"error": "Невалиден формат на данните!"}), 400
 
 
-@app.route("/profile", methods=["GET", "POST"])
-def profile():
+@app.route("/users/<int:user_id>/username", methods=["PATCH"])
+def update_username(user_id):
+    if("user_id" not in session):
+        return jsonify({"error": "Не сте удостоверен в системата!"}), 401
+        
+    if(session["user_id"]!=user_id):
+        return jsonify({"error": "Нямате привилегии за това действие!"}), 403
+
+    user=get_user()
+    if(not user):
+        return jsonify({"error": "Потребителят не е намерен!"}), 404
+
+    if(not request.is_json):
+        return jsonify({"error": "Невалиден формат на данните!"}), 400
+
+    data=request.get_json()
+    new_username=data.get("username")
+
+    if(not new_username or new_username.strip() == ""):
+        return jsonify({"error": "Потребителското име не може да бъде празно!"}), 400
+
+    if(new_username==user.username):
+        return "", 204
+
+    existing_user=db.session.execute(db.select(User).filter_by(username=new_username)).scalar_one_or_none()
+    if(existing_user and existing_user.id!=user.id):
+        return jsonify({"error": "Това потребителско име вече е заето!"}), 400
+
+    user.username=new_username
+    db.session.commit()
+    return jsonify({"success": "Успешно променихте потребителското си име!"}), 200
+
+
+@app.route("/users/<int:user_id>/email", methods=["PATCH"])
+def update_email(user_id):
+    if("user_id" not in session):
+        return jsonify({"error": "Не сте удостоверен в системата!"}), 401
+        
+    if(session["user_id"]!=user_id):
+        return jsonify({"error": "Нямате привилегии за това действие!"}), 403
+
+    user=get_user()
+    if(not user):
+        return jsonify({"error": "Потребителят не е намерен!"}), 404
+
+    if(not request.is_json):
+        return jsonify({"error": "Невалиден формат на данните!"}), 400
+
+    data=request.get_json()
+    new_email=data.get("email")
+
+    if(not new_email or new_email.strip() == ""):
+        return jsonify({"error": "Имейлът не може да бъде празен!"}), 400
+
+    if(new_email==user.email):
+        return '', 204
+
+    existing_user = db.session.execute(db.select(User).filter_by(email=new_email)).scalar_one_or_none()
+    if(existing_user and existing_user.id!=user.id):
+        return jsonify({"error": "Този имейл вече е зает!"}), 400
+
+    user.email=new_email
+    db.session.commit()
+    return jsonify({"success": "Успешно променихте имейла си!"}), 200
+
+
+@app.route("/users/<int:user_id>/password", methods=["PATCH"])
+def update_password(user_id):
+    if("user_id" not in session):
+        return jsonify({"error": "Не сте удостоверен в системата!"}), 401
+        
+    if(session["user_id"] != user_id):
+        return jsonify({"error": "Нямате привилегии за това действие!"}), 403
+
+    user=get_user()
+    if(not user):
+        return jsonify({"error": "Потребителят не е намерен!"}), 404
+
+    if(not request.is_json):
+        return jsonify({"error": "Невалиден формат на данните!"}), 400
+
+    data=request.get_json()
+    old_password=data.get("old_password")
+    new_password=data.get("new_password")
+    confirm_password=data.get("confirm_password")
+
+    if(not old_password or not new_password or not confirm_password):
+        return jsonify({"error": "Моля попълнете всички полета!"}), 400
+
+    if(len(new_password) < 10):
+        return jsonify({"error": "Новата парола трябва да е поне 10 символа!"}), 400
+
+    if(not check_password_hash(user.password, old_password)):
+        return jsonify({"error": "Старата парола е грешна!"}), 400
+
+    if(new_password!=confirm_password):
+        return jsonify({"error": "Паролите не съвпадат!"}), 400
+
+    user.password=generate_password_hash(new_password)
+    db.session.commit()
+    return jsonify({"success": "Успешно променихте паролата си!"}), 200
+
+
+@app.route("/logout", methods=["POST"])
+def logout():
     if("user_id" not in session):
         return jsonify({"error": "Нямате достъп!"}), 401
+    session.clear()
+    return "", 204
+
+
+@app.route("/users/<int:user_id>", methods=["DELETE"])
+def delete_user(user_id):
+    if("user_id" not in session):
+        return jsonify({"error": "Не сте удостоверен в системата!"}), 401
     
-    if(request.method=="GET"):
-        return render_template("profile.html", user=get_user())
-    
+    if(session["user_id"]!=user_id):
+        return jsonify({"error": "Нямате привилегии за това действие!"}), 403
+
     user=get_user()
-    action=request.form.get("action")
-    
-    if(action=="update_username"):
-        new_username=request.form.get("username")
-        if(new_username==user.username):
-            return redirect(url_for('profile'))
-        existing_user=db.session.execute(db.select(User).filter_by(username=new_username)).scalar_one_or_none()
-        if(existing_user and existing_user.id!=user.id):
-            return render_template("profile.html", user=user, error_username="Това потребителско име вече е заето!")
-        user.username=new_username
-        db.session.commit()
-        return render_template("profile.html", user=user, success_username="Успешно променихте потребителското си име!")
-    
-    elif(action=="update_email"):
-        new_email=request.form.get("email")
-        if(new_email==user.email):
-            return redirect(url_for('profile'))
-        existing_user=db.session.execute(db.select(User).filter_by(email=new_email)).scalar_one_or_none()
-        if(existing_user and existing_user.id!=user.id):
-            return render_template("profile.html", user=user, error_email="Този имейл вече е зает!")
-        user.email=new_email
-        db.session.commit()
-        return render_template("profile.html", user=user, success_email="Успешно променихте имейлът си!")
-    
-    elif(action=="update_password"):
-        old_password=request.form.get("old_password")
-        new_password=request.form.get("new_password")
-        confirm_password=request.form.get("confirm_password")
-        
-        if(not old_password or not new_password or not confirm_password):
-            return render_template("profile.html", user=user, error_password="Моля попълнете всички полета!")
-        
-        if(len(new_password)<10):
-            return render_template("profile.html", user=user, error_password="Паролата трябва да е поне 10 символа!")
-        
-        if(not check_password_hash(user.password, old_password)):
-            return render_template("profile.html", user=user, error_password="Старата парола е грешна!")
-        
-        if(new_password!=confirm_password):
-            return render_template("profile.html", user=user, error_password="Паролите не съвпадат!")
-        
-        hashed_password=generate_password_hash(new_password)
-        user.password=hashed_password
-        db.session.commit()
-        return render_template("profile.html", user=user, success_password="Успешно променихте паролата си!")
+    if(not user):
+        return jsonify({"error": "Потребителят не е намерен!"}), 404
+
+    db.session.delete(user)
+    db.session.commit()
+    session.clear()
+    return "", 204
 
 
 @app.route("/statistics", methods=["GET"])

@@ -26,76 +26,48 @@
     </div>
 
     <div id="info-container">
-        <form action="{{ url_for('profile') }}" method="POST">
-            <input type="hidden" name="action" value="update_username">
+        <div class="info-row">
             <div>
                 <label for="username">Потребителско име</label>
                 <input type="text" id="username" name="username" value="{{ user.username }}" required>
             </div>
-            <button type="submit">Смени</button>
-        </form>
-        {% if error_username %}
-            <h3 style="color: #e74c3c;">
-                {{ error_username }}
-            </h3>
-        {% elif success_username %}
-            <h3 style="color: #2ecc71;">
-                {{ success_username }}
-            </h3>
-        {% endif %}
+            <button id="update-username-button">Смени</button>
+        </div>
+        <h3 id="message_username" class="display_none"></h3>
 
-        <form action="{{ url_for('profile') }}" method="POST">
-            <input type="hidden" name="action" value="update_email">
+        <div class="info-row">
             <div>
                 <label for="email">Имейл</label>
                 <input type="email" id="email" name="email" value="{{ user.email }}" required>
             </div>
-            <button type="submit">Смени</button>
-        </form>
-        {% if error_email %}
-            <h3 style="color: #e74c3c;">
-                {{ error_email }}
-            </h3>
-        {% elif success_email %}
-            <h3 style="color: #2ecc71;">
-                {{ success_email }}
-            </h3>
-        {% endif %}
+            <button id="update-email-button">Смени</button>
+        </div>
+        <h3 id="message_email" class="display_none"></h3>
     </div>
 
     <div id="security-container">
         <h3>Смяна на парола</h3>
-        <form action="{{ url_for('profile') }}" method="POST">
-            <input type="hidden" name="action" value="update_password">
-            
-            <div class="password-field-group">
-                <label for="old_password">Стара парола</label>
-                <input type="password" id="old_password" name="old_password" placeholder="Въведете старата парола" required minlength="10">
-                <i class="fa-solid fa-eye toggle-password"></i>
-            </div>
+        
+        <div class="password-field-group">
+            <label for="old_password">Стара парола</label>
+            <input type="password" id="old_password" name="old_password" placeholder="Въведете старата парола" required minlength="10" autocomplete="new-password">
+            <i class="fa-solid fa-eye toggle-password"></i>
+        </div>
 
-            <div class="password-field-group">
-                <label for="new_password">Нова парола</label>
-                <input type="password" id="new_password" name="new_password" placeholder="Въведете новата парола" required minlength="10">
-                <i class="fa-solid fa-eye toggle-password"></i>
-            </div>
+        <div class="password-field-group">
+            <label for="new_password">Нова парола</label>
+            <input type="password" id="new_password" name="new_password" placeholder="Въведете новата парола" required minlength="10">
+            <i class="fa-solid fa-eye toggle-password"></i>
+        </div>
 
-            <div class="password-field-group">
-                <label for="confirm_password">Повтори новата парола</label>
-                <input type="password" id="confirm_password" name="confirm_password" placeholder="Повторете новата парола" required minlength="10">
-                <i class="fa-solid fa-eye toggle-password"></i>
-            </div>
-            {% if error_password %}
-                <h3 style="color: #e74c3c;">
-                    {{ error_password }}
-                </h3>
-                {% elif success_password %}
-                <h3 style="color: #2ecc71;">
-                    {{ success_password }}
-                </h3>
-            {% endif %}
-            <button type="submit">Смени паролата</button>
-        </form>
+        <div class="password-field-group">
+            <label for="confirm_password">Повтори новата парола</label>
+            <input type="password" id="confirm_password" name="confirm_password" placeholder="Повторете новата парола" required minlength="10">
+            <i class="fa-solid fa-eye toggle-password"></i>
+        </div>
+
+        <h3 id="message_password" class="display_none"></h3>
+        <button id="update-password-button">Смени паролата</button>
     </div>
 
     <div id="danger-container">
@@ -117,7 +89,7 @@
     const delete_avatar_button = document.getElementById("delete-avatar-button");
 
     avatar_input.addEventListener("change", () =>
-        {const file = avatar_input.files[0];
+        {const file=avatar_input.files[0];
         if(!file) return;
 
         const form_data = new FormData();
@@ -141,6 +113,104 @@
                     {window.location.reload();}
                 else
                     {alert(data.error);}}));});}
+    
+    
+    const username_input = document.getElementById("username");
+    const update_username_button = document.getElementById("update-username-button");
+
+    update_username_button.addEventListener("click", () =>
+        {const message_box = document.getElementById("message_username");
+        message_box.textContent="";
+        message_box.className="display_none";
+        
+        const username_value=username_input.value;
+
+        fetch("/users/{{ user.id }}/username",
+            {method: "PATCH",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({"username": username_value})})
+        .then((response) => response.json().then((data) => ({status: response.status, body: data})))
+        .then((result) =>
+            {if(result.status===200)
+                {message_box.textContent = result.body.success;
+                message_box.classList.remove("display_none");
+                message_box.classList.add("success");}
+            
+            if(result.status===400)
+                {message_box.textContent = result.body.error;
+                message_box.classList.remove("display_none");
+                message_box.classList.add("error");}});});
+    
+    
+    const email_input = document.getElementById("email");
+    const update_email_button = document.getElementById("update-email-button");
+
+    update_email_button.addEventListener("click", () =>
+        {const message_box = document.getElementById("message_email");
+        message_box.textContent="";
+        message_box.className="display_none";
+        
+        const email_value=email_input.value;
+
+        fetch("/users/{{ user.id }}/email", 
+            {method: "PATCH", 
+            headers: {"Content-Type": "application/json"}, 
+            body: JSON.stringify({"email": email_value})})
+        .then((response) => response.json().then((data) => ({status: response.status, body: data})))
+        .then((result) =>
+            {if(result.status===200)
+                {message_box.textContent = result.body.success;
+                message_box.classList.remove("display_none");
+                message_box.classList.add("success");}
+            else if(result.status===400)
+                {message_box.textContent = result.body.error;
+                message_box.classList.remove("display_none");
+                message_box.classList.add("error");}});});
+    
+    
+    const old_password_input = document.getElementById("old_password");
+    const new_password_input = document.getElementById("new_password");
+    const confirm_password_input = document.getElementById("confirm_password");
+    const update_password_button = document.getElementById("update-password-button");
+
+    update_password_button.addEventListener("click", () =>
+        {const message_box = document.getElementById("message_password");
+        message_box.textContent="";
+        message_box.className="display_none";
+        
+        const old_password_value=old_password_input.value;
+        const new_password_value=new_password_input.value;
+        const confirm_password_value=confirm_password_input.value;
+
+        fetch("/users/{{ user.id }}/password", 
+            {method: "PATCH", 
+            headers: {"Content-Type": "application/json"}, 
+            body: JSON.stringify({
+                "old_password": old_password_value,
+                "new_password": new_password_value,
+                "confirm_password": confirm_password_value})})
+        .then((response) => response.json().then((data) => ({status: response.status, body: data})))
+        .then((result) =>
+            {if(result.status===200)
+                {message_box.textContent=result.body.success;
+                message_box.classList.remove("display_none");
+                message_box.classList.add("success");
+                
+                old_password_input.value = "";
+                new_password_input.value = "";
+                confirm_password_input.value = "";
+                
+                document.querySelectorAll(".password-field-group").forEach((group) => {
+                    const input=group.querySelector("input");
+                    const icon=group.querySelector(".toggle-password");
+                    
+                    input.setAttribute("type", "password");
+                    icon.classList.remove("fa-eye-slash");});}
+            
+            if(result.status===400)
+                {message_box.textContent=result.body.error;
+                message_box.classList.remove("display_none");
+                message_box.classList.add("error");}});});
     
     
     document.getElementById("logout-button").addEventListener("click", (e) =>
