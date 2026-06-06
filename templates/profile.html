@@ -182,9 +182,9 @@
         const new_password_value=new_password_input.value;
         const confirm_password_value=confirm_password_input.value;
 
-        fetch("/users/{{ user.id }}/password", 
-            {method: "PATCH", 
-            headers: {"Content-Type": "application/json"}, 
+        fetch("/users/{{ user.id }}/password",
+            {method: "PATCH",
+            headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
                 "old_password": old_password_value,
                 "new_password": new_password_value,

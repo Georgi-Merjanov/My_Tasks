@@ -66,7 +66,7 @@ def get_current_week(offset=0):
     return dictionary
 
 
-@app.route("/", methods=["GET", "POST"])
+@app.route("/", methods=["GET"])
 def home():
     if("user_id" not in session):
         return redirect(url_for("login"))
