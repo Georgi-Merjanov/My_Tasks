@@ -221,7 +221,7 @@ main > div:nth-of-type(2) > div .tasks-container .task-box .task-checkbox:hover:
 main > div:nth-of-type(2) > div .tasks-container .task-box .task-text, main > div:nth-of-type(3) > div .tasks-container .task-box .task-text {
   flex: 1;
   min-width: 0;
-  font-size: 0.95rem;
+  font-size: 1rem;
   color: #2c3e50;
   text-align: left;
   white-space: normal;
@@ -345,6 +345,32 @@ main > div:nth-of-type(2) > div .tasks-container .task-box .task-menu .close-men
 main > div:nth-of-type(2) > div .tasks-container .task-box .task-menu .close-menu-button:hover, main > div:nth-of-type(3) > div .tasks-container .task-box .task-menu .close-menu-button:hover {
   color: #2c3e50;
   background-color: transparent;
+}
+main > div:nth-of-type(2) > div .tasks-container .task-box .edit-task-input, main > div:nth-of-type(3) > div .tasks-container .task-box .edit-task-input {
+  width: 100%;
+  border: 0.08rem solid #e0d7c1;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.4rem;
+  font-size: 0.8rem;
+  outline: none;
+  color: #2c3e50;
+  height: 1.7rem;
+}
+main > div:nth-of-type(2) > div .tasks-container .task-box .save-edit-button, main > div:nth-of-type(3) > div .tasks-container .task-box .save-edit-button {
+  background-color: #2ecc71;
+  border: none;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.3rem;
+  margin-left: 1rem;
+  transition: background-color 0.3s;
+}
+main > div:nth-of-type(2) > div .tasks-container .task-box .save-edit-button:hover, main > div:nth-of-type(3) > div .tasks-container .task-box .save-edit-button:hover {
+  background-color: #289d59;
 }
 main > div:nth-of-type(2) > div .add-task-box, main > div:nth-of-type(3) > div .add-task-box {
   display: flex;

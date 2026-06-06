@@ -264,9 +264,45 @@
     
     
     function Edit_task(button_edit_task)
-        {
+        {const task_box=button_edit_task.closest(".task-box");
+        const task_id=task_box.getAttribute("data-id");
+        const task_text_element=task_box.querySelector(".task-text");
+        const menu_button=task_box.querySelector(".task-menu-button");
         
-        }
+        if (task_box.querySelector(".edit-task-input")) 
+                return;
+
+        const old_text=task_text_element.innerText;
+        Toggle_menu(button_edit_task);
+
+        task_text_element.innerHTML=`<input type="text" class="edit-task-input" value="${old_text}">`;
+        const input=task_text_element.querySelector(".edit-task-input");
+        
+        setTimeout(() => 
+                {input.focus();
+                input.setSelectionRange(old_text.length, old_text.length);
+                input.scrollLeft=input.scrollWidth;}, 1);
+
+        menu_button.classList.add("display_none");
+
+        const save_button=document.createElement("button");
+        save_button.className="save-edit-button";
+        save_button.innerText="Запази";
+        task_box.insertBefore(save_button, task_box.querySelector(".task-menu"));
+
+        save_button.onclick=function()
+                {const new_text=input.value.trim();
+                if(new_text==="") 
+                        return;
+
+                fetch("/tasks/"+task_id, {method: "PATCH",
+                        headers: {"Content-Type": "application/json"},
+                        body: JSON.stringify({name: new_text})})
+                .then((response) => 
+                        {if(response.status===200) 
+                                {task_text_element.innerText=new_text;
+                                save_button.remove();
+                                menu_button.classList.remove("display_none");}}).catch(()=>{});};}
     
     
     function Delete_task(button_delete_task)
