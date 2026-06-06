@@ -254,10 +254,26 @@
                         else
                                 {task_container.insertBefore(task_box, task_container.firstChild);}}});}
     
+    
     function Toggle_menu(element)
         {const task_box=element.closest(".task-box"); 
         const menu=task_box.querySelector(".task-menu");
         if(menu)
             menu.classList.toggle("display_none");}
+    
+    
+    function Edit_task(button_edit_task)
+        {
+        
+        }
+    
+    function Delete_task(button_delete_task)
+        {const task_box=button.closest(".task-box");
+        const task_id=task_box.getAttribute("data-id");
+
+        fetch("/tasks/" + task_id, { method: "DELETE" })
+        .then((response) =>
+            {if(response.status===204)
+                task_box.remove();});}
 </script>
 {% endblock %}

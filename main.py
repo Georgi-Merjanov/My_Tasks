@@ -86,7 +86,7 @@ def dictify(task):
 
 
 @app.route("/tasks", methods=["GET", "POST"])
-def add_task():
+def add_task_or_send_all_tasks():
     if("user_id" not in session):
         return jsonify({"error": "Не сте удостоверен в системата!"}), 401
 
@@ -146,6 +146,39 @@ def toggle_checkbox(task_id):
     task.is_finished=not task.is_finished
     db.session.commit()
     return jsonify(dictify(task)), 200
+
+
+@app.route("/tasks/<int:task_id>", methods=["PATCH", "DELETE"])
+def edit_or_delete_task(task_id):
+    if("user_id" not in session):
+        return jsonify({"error": "Не сте удостоверен в системата!"}), 401
+
+    task=get_task(task_id)
+    if(not task):
+        return jsonify({"error": "Задачата не е намерена!"}), 404
+
+    user=get_user()
+    if(not user):
+        return jsonify({"error": "Потребителят не е намерен!"}), 404
+    
+    if(request.method=="PATCH"):
+        if(not request.is_json):
+            return jsonify({"error": "Невалиден формат на данните!"}), 400
+
+        data=request.get_json()
+        task_text=data.get("name")
+
+        if(not task_text or task_text.strip() == ""):
+            return jsonify({"error": "Името на задачата не може да бъде празно!"}), 400
+        
+        task.name=task_text
+        db.session.commit()
+        return jsonify(dictify(task)), 200
+    
+    elif(request.method=="DELETE"):
+        db.session.delete(task)
+        db.session.commit()
+        return "", 204
 
 
 @app.route("/register", methods=["GET", "POST"])
