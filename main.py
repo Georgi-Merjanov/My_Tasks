@@ -121,7 +121,7 @@ def add_task():
             return jsonify({"error": "Невалиден формат на датата!"}), 400
     
     elif(request.method=="GET"):
-        tasks=db.session.execute(db.select(Task).filter_by(user_id=user.id)).scalars().all()
+        tasks=db.session.execute(db.select(Task).filter_by(user_id=user.id).order_by(Task.is_finished, Task.id.desc())).scalars().all()
         return jsonify([dictify(task) for task in tasks])
 
 

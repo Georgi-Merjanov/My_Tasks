@@ -27,8 +27,8 @@
                 <input type="text" placeholder="Име на задачата...">
                 <button class="save-task-button" onclick="Save_task(this)">Добави</button>
 				<button class="cancel-task-button" onclick="Hide_input(this)">
-				<i class="fa-solid fa-xmark"></i>
-			</button>
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
             </div>
             <button class="add-task-button" onclick="Show_input(this)">+ Добави задача</button>
         </div>
@@ -40,8 +40,8 @@
                 <input type="text" placeholder="Име на задачата...">
                 <button class="save-task-button" onclick="Save_task(this)">Добави</button>
 				<button class="cancel-task-button" onclick="Hide_input(this)">
-				<i class="fa-solid fa-xmark"></i>
-			</button>
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
             </div>
             <button class="add-task-button" onclick="Show_input(this)">+ Добави задача</button>
         </div>
@@ -53,8 +53,8 @@
                 <input type="text" placeholder="Име на задачата...">
                 <button class="save-task-button" onclick="Save_task(this)">Добави</button>
 				<button class="cancel-task-button" onclick="Hide_input(this)">
-				<i class="fa-solid fa-xmark"></i>
-			</button>
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
             </div>
             <button class="add-task-button" onclick="Show_input(this)">+ Добави задача</button>
         </div>
@@ -66,8 +66,8 @@
                 <input type="text" placeholder="Име на задачата...">
                 <button class="save-task-button" onclick="Save_task(this)">Добави</button>
 				<button class="cancel-task-button" onclick="Hide_input(this)">
-				<i class="fa-solid fa-xmark"></i>
-			</button>
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
             </div>
             <button class="add-task-button" onclick="Show_input(this)">+ Добави задача</button>
         </div>
@@ -81,8 +81,8 @@
                 <input type="text" placeholder="Име на задачата...">
                 <button class="save-task-button" onclick="Save_task(this)">Добави</button>
 				<button class="cancel-task-button" onclick="Hide_input(this)">
-				<i class="fa-solid fa-xmark"></i>
-			</button>
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
             </div>
             <button class="add-task-button" onclick="Show_input(this)">+ Добави задача</button>
         </div>
@@ -94,8 +94,8 @@
                 <input type="text" placeholder="Име на задачата...">
                 <button class="save-task-button" onclick="Save_task(this)">Добави</button>
 				<button class="cancel-task-button" onclick="Hide_input(this)">
-				<i class="fa-solid fa-xmark"></i>
-			</button>
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
             </div>
             <button class="add-task-button" onclick="Show_input(this)">+ Добави задача</button>
         </div>
@@ -107,8 +107,8 @@
                 <input type="text" placeholder="Име на задачата...">
                 <button class="save-task-button" onclick="Save_task(this)">Добави</button>
 				<button class="cancel-task-button" onclick="Hide_input(this)">
-				<i class="fa-solid fa-xmark"></i>
-			</button>
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
             </div>
             <button class="add-task-button" onclick="Show_input(this)">+ Добави задача</button>
         </div>
@@ -149,14 +149,14 @@
                 {if (result.status===201) 
                         {const task_html = `
                                 <div class="task-box" data-id="${result.body.id}">
-                                        <div class="task-checkbox"></div>
+                                        <div class="task-checkbox" onclick="Toggle_task(this)"></div>
                                         <span class="task-text">${result.body.name}</span>
                                         <button class="task-menu-button">
                                                 <i class="fa-solid fa-ellipsis-v"></i>
                                         </button>
                                 </div>
                         `;
-                        task_container.insertAdjacentHTML("beforeend", task_html);
+                        task_container.insertAdjacentHTML("afterbegin", task_html);
                         
                         add_task_box.classList.add("display_none");
                         add_task_box.nextElementSibling.classList.remove("display_none");
@@ -173,7 +173,7 @@
                     if(day_container)
                         {const task_html = `
                             <div class="task-box ${task.is_finished ? "is-finished" : ""}" data-id="${task.id}">
-                                <div class="task-checkbox"></div>
+                                <div class="task-checkbox" onclick="Toggle_task(this)"></div>
                                 <span class="task-text">${task.name}</span>
                                 <button class="task-menu-button">
                                     <i class="fa-solid fa-ellipsis-v"></i>
@@ -181,5 +181,21 @@
                             </div>
                         `;
                         day_container.insertAdjacentHTML("beforeend", task_html);}});}});});
+    
+
+    function Toggle_task(checkbox)
+        {const task_box=checkbox.parentElement;
+        const task_id=task_box.getAttribute("data-id");const task_container = task_box.parentElement;
+
+        fetch("/tasks/" + task_id + "/checkbox", {method: "PATCH"})
+        .then((response) => response.json().then((data) => ({status: response.status, body: data})))
+        .then((result) =>
+                {if (result.status===200)
+                        {task_box.classList.toggle("is-finished");
+                        
+                        if (task_box.classList.contains("is-finished"))
+                                {task_container.appendChild(task_box);}
+                        else
+                                {task_container.insertBefore(task_box, task_container.firstChild);}}});}
 </script>
 {% endblock %}
