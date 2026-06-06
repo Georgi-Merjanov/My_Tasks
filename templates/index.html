@@ -21,55 +21,81 @@
     <div>
         <div id="{% if(week['monday']==today) %}today-box{% endif %}">
             <h3>Понеделник <span>{{ week["monday"].day }}</span></h3>
-            <div class="task-container">
-                
+            <div class="tasks-container" data-date="{{ week['monday'].isoformat() }}">
+                <div class="add-task-box display_none">
+                    <input type="text" placeholder="Име на задачата...">
+                    <button class="save-task-button">Добави</button>
+                </div>
             </div>
-            <button>+ Добави задача</button>
+            <button class="add-task-button">+ Добави задача</button>
         </div>
+
         <div id="{% if(week['tuesday']==today) %}today-box{% endif %}">
             <h3>Вторник <span>{{ week["tuesday"].day }}</span></h3>
-            <div class="tasks-container">
-
+            <div class="tasks-container" data-date="{{ week['tuesday'].isoformat() }}">
+                <div class="add-task-box display_none">
+                    <input type="text" placeholder="Име на задачата...">
+                    <button class="save-task-button">Добави</button>
+                </div>
             </div>
-            <button>+ Добави задача</button>
+            <button class="add-task-button">+ Добави задача</button>
         </div>
+
         <div id="{% if(week['wednesday']==today) %}today-box{% endif %}">
             <h3>Сряда <span>{{ week["wednesday"].day }}</span></h3>
-            <div class="tasks-container">
-                
+            <div class="tasks-container" data-date="{{ week['wednesday'].isoformat() }}">
+                <div class="add-task-box display_none">
+                    <input type="text" placeholder="Име на задачата...">
+                    <button class="save-task-button">Добави</button>
+                </div>
             </div>
-            <button>+ Добави задача</button>
+            <button class="add-task-button">+ Добави задача</button>
         </div>
+
         <div id="{% if(week['thursday']==today) %}today-box{% endif %}">
             <h3>Четвъртък <span>{{ week["thursday"].day }}</span></h3>
-            <div class="tasks-container">
-                
+            <div class="tasks-container" data-date="{{ week['thursday'].isoformat() }}">
+                <div class="add-task-box display_none">
+                    <input type="text" placeholder="Име на задачата...">
+                    <button class="save-task-button">Добави</button>
+                </div>
             </div>
-            <button>+ Добави задача</button>
+            <button class="add-task-button">+ Добави задача</button>
         </div>
     </div>
 
     <div>
         <div id="{% if(week['friday']==today) %}today-box{% endif %}">
             <h3>Петък <span>{{ week["friday"].day }}</span></h3>
-            <div class="tasks-container">
-                
+            <div class="tasks-container" data-date="{{ week['friday'].isoformat() }}">
+                <div class="add-task-box display_none">
+                    <input type="text" placeholder="Име на задачата...">
+                    <button class="save-task-button">Добави</button>
+                </div>
             </div>
-            <button>+ Добави задача</button>
+            <button class="add-task-button">+ Добави задача</button>
         </div>
+
         <div id="{% if(week['saturday']==today) %}today-box{% endif %}">
             <h3>Събота <span>{{ week["saturday"].day }}</span></h3>
-            <div class="tasks-container">
-                
+            <div class="tasks-container" data-date="{{ week['saturday'].isoformat() }}">
+                <div class="add-task-box display_none">
+                    <input type="text" placeholder="Име на задачата...">
+                    <button class="save-task-button">Добави</button>
+                </div>
             </div>
-            <button>+ Добави задача</button>
+            <button class="add-task-button">+ Добави задача</button>
         </div>
+
         <div id="{% if(week['sunday']==today) %}today-box{% endif %}">
             <h3>Неделя <span>{{ week["sunday"].day }}</span></h3>
-            <div class="tasks-container">
-                
+            <div class="tasks-container" data-date="{{ week['sunday'].isoformat() }}">
+                <div class="add-task-box display_none">
+                    <input type="text" placeholder="Име на задачата...">
+                    <button class="save-task-button">Добави</button>
+                </div>
             </div>
-            <button>+ Добави задача</button>
+            <button class="add-task-button">+ Добави задача</button>
         </div>
     </div>
 </main>

@@ -69,4 +69,8 @@ nav #nav-right img[alt="Профилна снимка"] {
 }
 nav #nav-right img.placeholder {
   border: none !important;
+}
+
+.display_none {
+  display: none;
 }/*# sourceMappingURL=base.css.map */

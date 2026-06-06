@@ -71,6 +71,10 @@ nav #nav-right img.placeholder {
   border: none !important;
 }
 
+.display_none {
+  display: none;
+}
+
 main {
   display: flex;
   flex-direction: column;
@@ -165,8 +169,4 @@ main p a {
 }
 main p a:hover {
   text-decoration: underline;
-}
-
-.display_none {
-  display: none;
 }/*# sourceMappingURL=login_and_register.css.map */

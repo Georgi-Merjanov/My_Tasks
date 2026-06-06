@@ -71,6 +71,10 @@ nav #nav-right img.placeholder {
   border: none !important;
 }
 
+.display_none {
+  display: none;
+}
+
 #profile-page {
   display: flex;
   flex-direction: column;
@@ -332,10 +336,6 @@ nav #nav-right img.placeholder {
   color: #888;
   font-size: 1rem;
   transition: color 0.2s;
-}
-
-.display_none {
-  display: none;
 }
 
 .message-base, .success, .error {
