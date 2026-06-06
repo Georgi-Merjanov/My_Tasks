@@ -72,5 +72,5 @@ nav #nav-right img.placeholder {
 }
 
 .display_none {
-  display: none;
+  display: none !important;
 }/*# sourceMappingURL=base.css.map */
