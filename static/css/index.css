@@ -289,6 +289,63 @@ main > div:nth-of-type(2) > div .tasks-container .task-box.is-not-finished .task
   text-decoration: line-through;
   color: #a0a0a0;
 }
+main > div:nth-of-type(2) > div .tasks-container .task-box .task-menu, main > div:nth-of-type(3) > div .tasks-container .task-box .task-menu {
+  position: absolute;
+  right: 0.8rem;
+  top: 4.25rem;
+  background-color: #ffffff;
+  border: 0.08rem solid #e0d7c1;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.2rem 0.8rem rgba(0, 0, 0, 0.15);
+  z-index: 10;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  padding: 0;
+}
+main > div:nth-of-type(2) > div .tasks-container .task-box .task-menu .menu-options, main > div:nth-of-type(3) > div .tasks-container .task-box .task-menu .menu-options {
+  display: flex;
+  flex-direction: column;
+  border-right: 0.08rem solid #e0d7c1;
+}
+main > div:nth-of-type(2) > div .tasks-container .task-box .task-menu button, main > div:nth-of-type(3) > div .tasks-container .task-box .task-menu button {
+  background: none;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  color: #2c3e50;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  transition: background-color 0.3s;
+}
+main > div:nth-of-type(2) > div .tasks-container .task-box .task-menu button:hover, main > div:nth-of-type(3) > div .tasks-container .task-box .task-menu button:hover {
+  background-color: #dddbdb;
+}
+main > div:nth-of-type(2) > div .tasks-container .task-box .task-menu button.delete-task-button, main > div:nth-of-type(3) > div .tasks-container .task-box .task-menu button.delete-task-button {
+  color: #e74c3c;
+}
+main > div:nth-of-type(2) > div .tasks-container .task-box .task-menu button.delete-task-button:hover, main > div:nth-of-type(3) > div .tasks-container .task-box .task-menu button.delete-task-button:hover {
+  background-color: rgba(231, 76, 60, 0.15);
+}
+main > div:nth-of-type(2) > div .tasks-container .task-box .task-menu .close-menu-button, main > div:nth-of-type(3) > div .tasks-container .task-box .task-menu .close-menu-button {
+  background: none;
+  border: none;
+  color: #a0a0a0;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.8rem;
+  transition: all 0.3s;
+}
+main > div:nth-of-type(2) > div .tasks-container .task-box .task-menu .close-menu-button:hover, main > div:nth-of-type(3) > div .tasks-container .task-box .task-menu .close-menu-button:hover {
+  color: #2c3e50;
+  background-color: transparent;
+}
 main > div:nth-of-type(2) > div .add-task-box, main > div:nth-of-type(3) > div .add-task-box {
   display: flex;
   gap: 0.5rem;

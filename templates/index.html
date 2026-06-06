@@ -148,14 +148,27 @@
         .then((result) =>
                 {if (result.status===201) 
                         {const task_html = `
-                                <div class="task-box" data-id="${result.body.id}">
-                                        <div class="task-checkbox" onclick="Toggle_task(this)"></div>
-                                        <span class="task-text">${result.body.name}</span>
-                                        <button class="task-menu-button">
-                                                <i class="fa-solid fa-ellipsis-v"></i>
+                            <div class="task-box" data-id="${result.body.id}">
+                                <div class="task-checkbox" onclick="Toggle_task(this)"></div>
+                                <span class="task-text">${result.body.name}</span>
+                                <button class="task-menu-button" onclick="Toggle_menu(this)">
+                                        <i class="fa-solid fa-ellipsis-v"></i>
+                                </button>
+                                <div class="task-menu display_none">
+                                    <div class="menu-options">
+                                        <button class="edit-task-button" onclick="Edit_task(this)">
+                                            <i class="fa-solid fa-pen"></i> Редактирай
                                         </button>
+                                        <button class="delete-task-button" onclick="Delete_task(this)">
+                                            <i class="fa-solid fa-trash"></i> Изтрий
+                                        </button>
+                                    </div>
+                                    <button class="close-menu-button" onclick="Toggle_menu(this)">
+                                        <i class="fa-solid fa-xmark"></i>
+                                    </button>
                                 </div>
-                        `;
+                            </div>
+                    `;
                         task_container.insertAdjacentHTML("afterbegin", task_html);
                         
                         add_task_box.classList.add("display_none");
@@ -185,7 +198,7 @@
                         let onclick_handler = 'onclick="Toggle_task(this)"';
                         let cursor_style = "";
                         let menu_button = `
-                            <button class="task-menu-button">
+                            <button class="task-menu-button" onclick="Toggle_menu(this)">
                                 <i class="fa-solid fa-ellipsis-v"></i>
                             </button>
                         `;
@@ -206,11 +219,16 @@
                                 <span class="task-text">${task.name}</span>
                                 ${menu_button}
                                 <div class="task-menu display_none">
-                                    <button class="edit-task-button" onclick="Edit_task(this)">
-                                        <i class="fa-solid fa-pen"></i> Редактирай
-                                    </button>
-                                    <button class="delete-task-button" onclick="Delete_task(this)">
-                                        <i class="fa-solid fa-trash"></i> Изтрий
+                                    <div class="menu-options">
+                                        <button class="edit-task-button" onclick="Edit_task(this)">
+                                            <i class="fa-solid fa-pen"></i> Редактирай
+                                        </button>
+                                        <button class="delete-task-button" onclick="Delete_task(this)">
+                                            <i class="fa-solid fa-trash"></i> Изтрий
+                                        </button>
+                                    </div>
+                                    <button class="close-menu-button" onclick="Toggle_menu(this)">
+                                        <i class="fa-solid fa-xmark"></i>
                                     </button>
                                 </div>
                             </div>
@@ -236,10 +254,10 @@
                         else
                                 {task_container.insertBefore(task_box, task_container.firstChild);}}});}
     
-    function Toggle_menu(button)
-    {const task_box=button.parentElement;
-    const menu=task_box.querySelector(".task-menu");
-    if(menu)
-        menu.classList.add("display_none");}
+    function Toggle_menu(element)
+        {const task_box=element.closest(".task-box"); 
+        const menu=task_box.querySelector(".task-menu");
+        if(menu)
+            menu.classList.toggle("display_none");}
 </script>
 {% endblock %}

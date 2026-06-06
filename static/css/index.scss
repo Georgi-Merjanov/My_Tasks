@@ -237,6 +237,71 @@ main {
                             color: #a0a0a0;
                         }
                     }
+
+                    .task-menu {
+                        position: absolute;
+                        right: 0.8rem;
+                        top: 4.25rem;
+                        background-color: #ffffff;
+                        border: 0.08rem solid $border;
+                        border-radius: 0.5rem;
+                        box-shadow: 0 0.2rem 0.8rem rgba(0, 0, 0, 0.15);
+                        z-index: 10;
+                        display: flex;
+                        flex-direction: row; 
+                        overflow: hidden;
+                        padding: 0;
+
+                        .menu-options {
+                            display: flex;
+                            flex-direction: column;
+                            border-right: 0.08rem solid $border;
+                        }
+
+                        button {
+                            background: none;
+                            border: none;
+                            padding: 0.5rem 1rem;
+                            font-size: 0.8rem;
+                            color: $text;
+                            cursor: pointer;
+                            display: flex;
+                            align-items: center;
+                            gap: 0.5rem;
+                            width: 100%;
+                            transition: background-color $transition-speed;
+
+                            &:hover {
+                                background-color: #dddbdb;
+                            }
+
+                            &.delete-task-button {
+                                color: $delete;
+                                
+                                &:hover {
+                                    background-color: rgba($delete, 0.15);
+                                }
+                            }
+                        }
+
+                        .close-menu-button {
+                            background: none;
+                            border: none;
+                            color: #a0a0a0;
+                            font-size: 1rem;
+                            cursor: pointer;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            padding: 0 0.8rem;
+                            transition: all $transition-speed;
+
+                            &:hover {
+                                color: $text;
+                                background-color: transparent;
+                            }
+                        }
+                    }
                 }
             }
 
