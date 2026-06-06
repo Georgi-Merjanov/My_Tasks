@@ -208,6 +208,35 @@ main {
                             color: #a0a0a0;
                         }
                     }
+
+                    &.is-not-finished {
+                        background-color: rgba($delete, 0.05);
+                        border-color: rgba($delete, 0.2);
+
+                        .task-checkbox {
+                            border-color: $delete;
+                            background-color: rgba($delete, 0.05);
+
+                            &::after {
+                                content: "\f00d";
+                                font-family: "Font Awesome 6 Free";
+                                font-weight: 900;
+                                font-size: 0.75rem;
+                                color: $delete;
+                                opacity: 1;
+                            }
+
+                            &:hover {
+                                background-color: rgba($delete, 0.05);
+                                border-color: $delete;
+                            }
+                        }
+
+                        .task-text {
+                            text-decoration: line-through;
+                            color: #a0a0a0;
+                        }
+                    }
                 }
             }
 
@@ -290,6 +319,16 @@ main {
                     background-color: #289d59;
                 }
             }
+            .day-expired-text{
+                color: #242323;
+                background-color: #a0a0a0;
+                border-radius: 0.5rem;
+                text-align: center;
+                margin-top: auto;
+                padding: 0.7rem;
+                font-size: 1rem;
+                font-weight: 600;
+            }
         }
     }
 
@@ -303,7 +342,7 @@ main {
         justify-content: center;
 
         > div {
-            width: calc((100% - 4.5rem)/4); 
+            width: calc((100% - 4.5rem)/4);
             flex: none;
         }
     }
