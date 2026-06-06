@@ -125,6 +125,29 @@ def add_task():
         return jsonify([dictify(task) for task in tasks])
 
 
+def get_task(task_id):
+    task=db.session.execute(db.select(Task).filter_by(id=task_id)).scalar_one_or_none()
+    return task
+
+
+@app.route("/tasks/<int:task_id>/checkbox", methods=["PATCH"])
+def toggle_checkbox(task_id):
+    if("user_id" not in session):
+        return jsonify({"error": "Не сте удостоверен в системата!"}), 401
+
+    user=get_user()
+    if(not user):
+        return jsonify({"error": "Потребителят не е намерен!"}), 404
+    
+    task=get_task(task_id)
+    if(not task):
+            return jsonify({"error": "Задачата не е намерена!"}), 404
+
+    task.is_finished=not task.is_finished
+    db.session.commit()
+    return jsonify(dictify(task)), 200
+
+
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if(request.method=="GET"):
