@@ -77,6 +77,54 @@ def home():
     return render_template("index.html", user=user, week=week, offset=offset, today=date.today())
 
 
+def dictify(task):
+    return{
+        "id": task.id,
+        "name": task.name,
+        "day_for": task.day_for.isoformat(),
+        "is_finished": task.is_finished}
+
+
+@app.route("/tasks", methods=["GET", "POST"])
+def add_task():
+    if("user_id" not in session):
+        return jsonify({"error": "Не сте удостоверен в системата!"}), 401
+
+    user=get_user()
+    if(not user):
+        return jsonify({"error": "Потребителят не е намерен!"}), 404
+    
+    if(request.method=="POST"):
+        if(not request.is_json):
+            return jsonify({"error": "Невалиден формат на данните!"}), 400
+
+        data=request.get_json()
+        task_text=data.get("text")
+        task_date=data.get("date")
+
+        if(not task_text or task_text.strip() == ""):
+            return jsonify({"error": "Името на задачата не може да бъде празно!"}), 400
+        
+        if(not task_date or task_date.strip() == ""):
+            return jsonify({"error": "Датата на задачата не може да бъде празна!"}), 400
+        
+        try:
+            date_object=date.fromisoformat(task_date)
+            
+            new_task=Task(name=task_text, day_for=date_object, user_id=user.id)
+            db.session.add(new_task)
+            db.session.commit()
+            
+            return jsonify(dictify(new_task)), 201
+        
+        except ValueError:
+            return jsonify({"error": "Невалиден формат на датата!"}), 400
+    
+    elif(request.method=="GET"):
+        tasks=db.session.execute(db.select(Task).filter_by(user_id=user.id)).scalars().all()
+        return jsonify([dictify(task) for task in tasks])
+
+
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if(request.method=="GET"):
