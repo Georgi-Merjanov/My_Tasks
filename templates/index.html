@@ -25,7 +25,7 @@
             <div class="tasks-container" data-date="{{ week['monday'].isoformat() }}"></div>
             <div class="add-task-box display_none">
                 <input type="text" placeholder="Име на задачата...">
-                <button class="save-task-button">Добави</button>
+                <button class="save-task-button" onclick="Save_task(this)">Добави</button>
 				<button class="cancel-task-button" onclick="Hide_input(this)">
 				<i class="fa-solid fa-xmark"></i>
 			</button>
@@ -38,7 +38,7 @@
             <div class="tasks-container" data-date="{{ week['tuesday'].isoformat() }}"></div>
             <div class="add-task-box display_none">
                 <input type="text" placeholder="Име на задачата...">
-                <button class="save-task-button">Добави</button>
+                <button class="save-task-button" onclick="Save_task(this)">Добави</button>
 				<button class="cancel-task-button" onclick="Hide_input(this)">
 				<i class="fa-solid fa-xmark"></i>
 			</button>
@@ -51,7 +51,7 @@
             <div class="tasks-container" data-date="{{ week['wednesday'].isoformat() }}"></div>
             <div class="add-task-box display_none">
                 <input type="text" placeholder="Име на задачата...">
-                <button class="save-task-button">Добави</button>
+                <button class="save-task-button" onclick="Save_task(this)">Добави</button>
 				<button class="cancel-task-button" onclick="Hide_input(this)">
 				<i class="fa-solid fa-xmark"></i>
 			</button>
@@ -64,7 +64,7 @@
             <div class="tasks-container" data-date="{{ week['thursday'].isoformat() }}"></div>
             <div class="add-task-box display_none">
                 <input type="text" placeholder="Име на задачата...">
-                <button class="save-task-button">Добави</button>
+                <button class="save-task-button" onclick="Save_task(this)">Добави</button>
 				<button class="cancel-task-button" onclick="Hide_input(this)">
 				<i class="fa-solid fa-xmark"></i>
 			</button>
@@ -79,7 +79,7 @@
             <div class="tasks-container" data-date="{{ week['friday'].isoformat() }}"></div>
             <div class="add-task-box display_none">
                 <input type="text" placeholder="Име на задачата...">
-                <button class="save-task-button">Добави</button>
+                <button class="save-task-button" onclick="Save_task(this)">Добави</button>
 				<button class="cancel-task-button" onclick="Hide_input(this)">
 				<i class="fa-solid fa-xmark"></i>
 			</button>
@@ -92,7 +92,7 @@
             <div class="tasks-container" data-date="{{ week['saturday'].isoformat() }}"></div>
             <div class="add-task-box display_none">
                 <input type="text" placeholder="Име на задачата...">
-                <button class="save-task-button">Добави</button>
+                <button class="save-task-button" onclick="Save_task(this)">Добави</button>
 				<button class="cancel-task-button" onclick="Hide_input(this)">
 				<i class="fa-solid fa-xmark"></i>
 			</button>
@@ -105,7 +105,7 @@
             <div class="tasks-container" data-date="{{ week['sunday'].isoformat() }}"></div>
             <div class="add-task-box display_none">
                 <input type="text" placeholder="Име на задачата...">
-                <button class="save-task-button">Добави</button>
+                <button class="save-task-button" onclick="Save_task(this)">Добави</button>
 				<button class="cancel-task-button" onclick="Hide_input(this)">
 				<i class="fa-solid fa-xmark"></i>
 			</button>
@@ -121,12 +121,47 @@
         button_to_disappear.classList.add("display_none");
         box_to_appear.classList.remove("display_none");}
     
+    
     function Hide_input(button_to_disappear)
         {const box_to_hide=button_to_disappear.parentElement;
         const button_to_reappear=box_to_hide.nextElementSibling;
         box_to_hide.classList.add("display_none");
         button_to_reappear.classList.remove("display_none");
         box_to_hide.querySelector("input").value = "";}
+    
+    
+    function Save_task(add_button)
+        {const add_task_box=add_button.parentElement;
+        const input=add_task_box.querySelector("input");
+        const task_name=input.value.trim();
+        
+        if (task_name === "") 
+                {return;}
+
+        const task_container=add_task_box.previousElementSibling;
+        const task_date=task_container.getAttribute("data-date");
+
+        fetch("/tasks", {method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({name: task_name, day_for: task_date})})
+        .then((response) => response.json().then((data) => ({status: response.status, body: data})))
+        .then((result) =>
+                {if (result.status===201) 
+                        {const task_html = `
+                                <div class="task-box" data-id="${result.body.id}">
+                                        <div class="task-checkbox"></div>
+                                        <span class="task-text">${result.body.name}</span>
+                                        <button class="task-menu-button">
+                                                <i class="fa-solid fa-ellipsis-v"></i>
+                                        </button>
+                                </div>
+                        `;
+                        task_container.insertAdjacentHTML("beforeend", task_html);
+                        
+                        add_task_box.classList.add("display_none");
+                        add_task_box.nextElementSibling.classList.remove("display_none");
+                        input.value = "";}});}
+    
 
     document.addEventListener("DOMContentLoaded", function()
         {fetch("/tasks", {method: "GET"})
@@ -141,13 +176,10 @@
                                 <div class="task-checkbox"></div>
                                 <span class="task-text">${task.name}</span>
                                 <button class="task-menu-button">
-                                    <i class="fa-solid fa-trash"></i>
+                                    <i class="fa-solid fa-ellipsis-v"></i>
                                 </button>
                             </div>
                         `;
-                        day_container.insertAdjacentHTML("beforeend", task_html);}});}});
-
-        
-        });
+                        day_container.insertAdjacentHTML("beforeend", task_html);}});}});});
 </script>
 {% endblock %}

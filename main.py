@@ -99,8 +99,8 @@ def add_task():
             return jsonify({"error": "Невалиден формат на данните!"}), 400
 
         data=request.get_json()
-        task_text=data.get("text")
-        task_date=data.get("date")
+        task_text=data.get("name")
+        task_date=data.get("day_for")
 
         if(not task_text or task_text.strip() == ""):
             return jsonify({"error": "Името на задачата не може да бъде празно!"}), 400
