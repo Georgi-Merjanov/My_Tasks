@@ -190,7 +190,7 @@ main {
                         }
                     }
 
-                    &.is-completed {
+                    &.is-finished {
                         background-color: rgba($add, 0.08);
                         border-color: rgba($add, 0.3);
 
@@ -209,8 +209,9 @@ main {
                         }
                     }
                 }
+            }
 
-                .add-task-box {
+            .add-task-box {
                     display: flex;
                     gap: 0.5rem;
                     align-items: center;
@@ -252,8 +253,25 @@ main {
                             background-color: #289d59;
                         }
                     }
+
+                    .cancel-task-button {
+                        background: none;
+                        border: none;
+                        color: #a0a0a0;
+                        font-size: 0.9rem;
+                        cursor: pointer;
+                        padding: 0 0.2rem;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        flex-shrink: 0;
+                        transition: color $transition-speed;
+
+                        &:hover {
+                            color: #646363;
+                        }
+                    }
                 }
-            }
 
             > button.add-task-button {
                 color: #fff;

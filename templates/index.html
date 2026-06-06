@@ -22,82 +22,132 @@
     <div>
         <div id="{% if(week['monday']==today) %}today-box{% endif %}">
             <h3>Понеделник <span>{{ week["monday"].day }}</span></h3>
-            <div class="tasks-container" data-date="{{ week['monday'].isoformat() }}">
-                <div class="add-task-box display_none">
-                    <input type="text" placeholder="Име на задачата...">
-                    <button class="save-task-button">Добави</button>
-                </div>
+            <div class="tasks-container" data-date="{{ week['monday'].isoformat() }}"></div>
+            <div class="add-task-box display_none">
+                <input type="text" placeholder="Име на задачата...">
+                <button class="save-task-button">Добави</button>
+				<button class="cancel-task-button" onclick="Hide_input(this)">
+				<i class="fa-solid fa-xmark"></i>
+			</button>
             </div>
-            <button class="add-task-button">+ Добави задача</button>
+            <button class="add-task-button" onclick="Show_input(this)">+ Добави задача</button>
         </div>
 
         <div id="{% if(week['tuesday']==today) %}today-box{% endif %}">
             <h3>Вторник <span>{{ week["tuesday"].day }}</span></h3>
-            <div class="tasks-container" data-date="{{ week['tuesday'].isoformat() }}">
-                <div class="add-task-box display_none">
-                    <input type="text" placeholder="Име на задачата...">
-                    <button class="save-task-button">Добави</button>
-                </div>
+            <div class="tasks-container" data-date="{{ week['tuesday'].isoformat() }}"></div>
+            <div class="add-task-box display_none">
+                <input type="text" placeholder="Име на задачата...">
+                <button class="save-task-button">Добави</button>
+				<button class="cancel-task-button" onclick="Hide_input(this)">
+				<i class="fa-solid fa-xmark"></i>
+			</button>
             </div>
-            <button class="add-task-button">+ Добави задача</button>
+            <button class="add-task-button" onclick="Show_input(this)">+ Добави задача</button>
         </div>
 
         <div id="{% if(week['wednesday']==today) %}today-box{% endif %}">
             <h3>Сряда <span>{{ week["wednesday"].day }}</span></h3>
-            <div class="tasks-container" data-date="{{ week['wednesday'].isoformat() }}">
-                <div class="add-task-box display_none">
-                    <input type="text" placeholder="Име на задачата...">
-                    <button class="save-task-button">Добави</button>
-                </div>
+            <div class="tasks-container" data-date="{{ week['wednesday'].isoformat() }}"></div>
+            <div class="add-task-box display_none">
+                <input type="text" placeholder="Име на задачата...">
+                <button class="save-task-button">Добави</button>
+				<button class="cancel-task-button" onclick="Hide_input(this)">
+				<i class="fa-solid fa-xmark"></i>
+			</button>
             </div>
-            <button class="add-task-button">+ Добави задача</button>
+            <button class="add-task-button" onclick="Show_input(this)">+ Добави задача</button>
         </div>
 
         <div id="{% if(week['thursday']==today) %}today-box{% endif %}">
             <h3>Четвъртък <span>{{ week["thursday"].day }}</span></h3>
-            <div class="tasks-container" data-date="{{ week['thursday'].isoformat() }}">
-                <div class="add-task-box display_none">
-                    <input type="text" placeholder="Име на задачата...">
-                    <button class="save-task-button">Добави</button>
-                </div>
+            <div class="tasks-container" data-date="{{ week['thursday'].isoformat() }}"></div>
+            <div class="add-task-box display_none">
+                <input type="text" placeholder="Име на задачата...">
+                <button class="save-task-button">Добави</button>
+				<button class="cancel-task-button" onclick="Hide_input(this)">
+				<i class="fa-solid fa-xmark"></i>
+			</button>
             </div>
-            <button class="add-task-button">+ Добави задача</button>
+            <button class="add-task-button" onclick="Show_input(this)">+ Добави задача</button>
         </div>
     </div>
 
     <div>
         <div id="{% if(week['friday']==today) %}today-box{% endif %}">
             <h3>Петък <span>{{ week["friday"].day }}</span></h3>
-            <div class="tasks-container" data-date="{{ week['friday'].isoformat() }}">
-                <div class="add-task-box display_none">
-                    <input type="text" placeholder="Име на задачата...">
-                    <button class="save-task-button">Добави</button>
-                </div>
+            <div class="tasks-container" data-date="{{ week['friday'].isoformat() }}"></div>
+            <div class="add-task-box display_none">
+                <input type="text" placeholder="Име на задачата...">
+                <button class="save-task-button">Добави</button>
+				<button class="cancel-task-button" onclick="Hide_input(this)">
+				<i class="fa-solid fa-xmark"></i>
+			</button>
             </div>
-            <button class="add-task-button">+ Добави задача</button>
+            <button class="add-task-button" onclick="Show_input(this)">+ Добави задача</button>
         </div>
 
         <div id="{% if(week['saturday']==today) %}today-box{% endif %}">
             <h3>Събота <span>{{ week["saturday"].day }}</span></h3>
-            <div class="tasks-container" data-date="{{ week['saturday'].isoformat() }}">
-                <div class="add-task-box display_none">
-                    <input type="text" placeholder="Име на задачата...">
-                    <button class="save-task-button">Добави</button>
-                </div>
+            <div class="tasks-container" data-date="{{ week['saturday'].isoformat() }}"></div>
+            <div class="add-task-box display_none">
+                <input type="text" placeholder="Име на задачата...">
+                <button class="save-task-button">Добави</button>
+				<button class="cancel-task-button" onclick="Hide_input(this)">
+				<i class="fa-solid fa-xmark"></i>
+			</button>
             </div>
-            <button class="add-task-button">+ Добави задача</button>
+            <button class="add-task-button" onclick="Show_input(this)">+ Добави задача</button>
         </div>
 
         <div id="{% if(week['sunday']==today) %}today-box{% endif %}">
             <h3>Неделя <span>{{ week["sunday"].day }}</span></h3>
-            <div class="tasks-container" data-date="{{ week['sunday'].isoformat() }}">
-                <div class="add-task-box display_none">
-                    <input type="text" placeholder="Име на задачата...">
-                    <button class="save-task-button">Добави</button>
-                </div>
+            <div class="tasks-container" data-date="{{ week['sunday'].isoformat() }}"></div>
+            <div class="add-task-box display_none">
+                <input type="text" placeholder="Име на задачата...">
+                <button class="save-task-button">Добави</button>
+				<button class="cancel-task-button" onclick="Hide_input(this)">
+				<i class="fa-solid fa-xmark"></i>
+			</button>
             </div>
-            <button class="add-task-button">+ Добави задача</button>
+            <button class="add-task-button" onclick="Show_input(this)">+ Добави задача</button>
         </div>
     </div>
 </main>
+
+<script>
+    function Show_input(button_to_disappear)
+        {const box_to_appear=button_to_disappear.previousElementSibling;
+        button_to_disappear.classList.add("display_none");
+        box_to_appear.classList.remove("display_none");}
+    
+    function Hide_input(button_to_disappear)
+        {const box_to_hide=button_to_disappear.parentElement;
+        const button_to_reappear=box_to_hide.nextElementSibling;
+        box_to_hide.classList.add("display_none");
+        button_to_reappear.classList.remove("display_none");
+        box_to_hide.querySelector("input").value = "";}
+
+    document.addEventListener("DOMContentLoaded", function()
+        {fetch("/tasks", {method: "GET"})
+        .then((response) => response.json().then((data) => ({status: response.status, body: data})))
+        .then((result) =>
+            {if(result.status===200)
+                {result.body.forEach((task) =>
+                    {const day_container = document.querySelector(`[data-date="${task.day_for}"]`);
+                    if(day_container)
+                        {const task_html = `
+                            <div class="task-box ${task.is_finished ? "is-finished" : ""}" data-id="${task.id}">
+                                <div class="task-checkbox"></div>
+                                <span class="task-text">${task.name}</span>
+                                <button class="task-menu-button">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </div>
+                        `;
+                        day_container.insertAdjacentHTML("beforeend", task_html);}});}});
+
+        
+        });
+</script>
 {% endblock %}

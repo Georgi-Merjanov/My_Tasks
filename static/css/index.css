@@ -250,29 +250,29 @@ main > div:nth-of-type(2) > div .tasks-container .task-box .task-menu-button:hov
   color: #2c3e50;
   background-color: #f0f0f0;
 }
-main > div:nth-of-type(2) > div .tasks-container .task-box.is-completed, main > div:nth-of-type(3) > div .tasks-container .task-box.is-completed {
+main > div:nth-of-type(2) > div .tasks-container .task-box.is-finished, main > div:nth-of-type(3) > div .tasks-container .task-box.is-finished {
   background-color: rgba(46, 204, 113, 0.08);
   border-color: rgba(46, 204, 113, 0.3);
 }
-main > div:nth-of-type(2) > div .tasks-container .task-box.is-completed .task-checkbox, main > div:nth-of-type(3) > div .tasks-container .task-box.is-completed .task-checkbox {
+main > div:nth-of-type(2) > div .tasks-container .task-box.is-finished .task-checkbox, main > div:nth-of-type(3) > div .tasks-container .task-box.is-finished .task-checkbox {
   border-color: #2ecc71;
   background-color: rgba(46, 204, 113, 0.08);
 }
-main > div:nth-of-type(2) > div .tasks-container .task-box.is-completed .task-checkbox::after, main > div:nth-of-type(3) > div .tasks-container .task-box.is-completed .task-checkbox::after {
+main > div:nth-of-type(2) > div .tasks-container .task-box.is-finished .task-checkbox::after, main > div:nth-of-type(3) > div .tasks-container .task-box.is-finished .task-checkbox::after {
   opacity: 1;
 }
-main > div:nth-of-type(2) > div .tasks-container .task-box.is-completed .task-text, main > div:nth-of-type(3) > div .tasks-container .task-box.is-completed .task-text {
+main > div:nth-of-type(2) > div .tasks-container .task-box.is-finished .task-text, main > div:nth-of-type(3) > div .tasks-container .task-box.is-finished .task-text {
   text-decoration: line-through;
   color: #a0a0a0;
 }
-main > div:nth-of-type(2) > div .tasks-container .add-task-box, main > div:nth-of-type(3) > div .tasks-container .add-task-box {
+main > div:nth-of-type(2) > div .add-task-box, main > div:nth-of-type(3) > div .add-task-box {
   display: flex;
   gap: 0.5rem;
   align-items: center;
   width: 100%;
   box-sizing: border-box;
 }
-main > div:nth-of-type(2) > div .tasks-container .add-task-box input, main > div:nth-of-type(3) > div .tasks-container .add-task-box input {
+main > div:nth-of-type(2) > div .add-task-box input, main > div:nth-of-type(3) > div .add-task-box input {
   flex: 1;
   width: 100%;
   min-width: 0;
@@ -283,10 +283,10 @@ main > div:nth-of-type(2) > div .tasks-container .add-task-box input, main > div
   outline: none;
   box-sizing: border-box;
 }
-main > div:nth-of-type(2) > div .tasks-container .add-task-box input:focus, main > div:nth-of-type(3) > div .tasks-container .add-task-box input:focus {
+main > div:nth-of-type(2) > div .add-task-box input:focus, main > div:nth-of-type(3) > div .add-task-box input:focus {
   border-color: #4a90e2;
 }
-main > div:nth-of-type(2) > div .tasks-container .add-task-box .save-task-button, main > div:nth-of-type(3) > div .tasks-container .add-task-box .save-task-button {
+main > div:nth-of-type(2) > div .add-task-box .save-task-button, main > div:nth-of-type(3) > div .add-task-box .save-task-button {
   background-color: #2ecc71;
   color: white;
   border: none;
@@ -301,8 +301,24 @@ main > div:nth-of-type(2) > div .tasks-container .add-task-box .save-task-button
   margin-top: 0;
   box-shadow: none;
 }
-main > div:nth-of-type(2) > div .tasks-container .add-task-box .save-task-button:hover, main > div:nth-of-type(3) > div .tasks-container .add-task-box .save-task-button:hover {
+main > div:nth-of-type(2) > div .add-task-box .save-task-button:hover, main > div:nth-of-type(3) > div .add-task-box .save-task-button:hover {
   background-color: #289d59;
+}
+main > div:nth-of-type(2) > div .add-task-box .cancel-task-button, main > div:nth-of-type(3) > div .add-task-box .cancel-task-button {
+  background: none;
+  border: none;
+  color: #a0a0a0;
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 0 0.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: color 0.3s;
+}
+main > div:nth-of-type(2) > div .add-task-box .cancel-task-button:hover, main > div:nth-of-type(3) > div .add-task-box .cancel-task-button:hover {
+  color: #646363;
 }
 main > div:nth-of-type(2) > div > button.add-task-button, main > div:nth-of-type(3) > div > button.add-task-button {
   color: #fff;
