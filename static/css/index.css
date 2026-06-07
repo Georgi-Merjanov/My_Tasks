@@ -183,6 +183,7 @@ main > div:nth-of-type(2) > div .tasks-container .task-box, main > div:nth-of-ty
   padding: 0.6rem 0.8rem;
   gap: 0.8rem;
   width: 100%;
+  position: relative;
   box-sizing: border-box;
   transition: all 0.3s;
 }
@@ -291,8 +292,8 @@ main > div:nth-of-type(2) > div .tasks-container .task-box.is-not-finished .task
 }
 main > div:nth-of-type(2) > div .tasks-container .task-box .task-menu, main > div:nth-of-type(3) > div .tasks-container .task-box .task-menu {
   position: absolute;
-  right: 0.8rem;
-  top: 4.25rem;
+  right: 0rem;
+  top: -0.25rem;
   background-color: #ffffff;
   border: 0.08rem solid #e0d7c1;
   border-radius: 0.5rem;
