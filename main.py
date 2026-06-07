@@ -477,6 +477,31 @@ def statistics_data():
     
     offset=request.args.get("offset", type=int, default=0)
     week_range=get_week_range(offset)
+    all_finished_tasks_count=get_all_finished_tasks_count(user.id)
+    win_streak=get_win_streak(user.id)
+
+    weekly_tasks=db.session.execute(db.select(Task).filter(Task.user_id==user.id, Task.day_for>=week_range.get("monday"), Task.day_for<=week_range.get("sunday"))).scalars().all()
+    weekly_finished_tasks=[task for task in weekly_tasks if task.is_finished]
+    balance_weekly_finished_tasks=f"{len(weekly_finished_tasks)} / {len(weekly_tasks)}"
+    percent_balance_weekly_finished_tasks_int=(100/len(weekly_tasks))*weekly_finished_tasks
+    percent_balance_weekly_finished_tasks=f"{(100/len(weekly_tasks))*weekly_finished_tasks}%"
+
+    last_week_range=get_week_range(offset-1)
+    last_week_tasks=db.session.execute(db.select(Task).filter(Task.user_id==user.id, Task.day_for>=last_week_range.get("monday"), Task.day_for<=last_week_range.get("sunday"))).scalars().all()
+    last_week_finished_tasks=[task for task in last_week_tasks if task.is_finished]
+    last_week_percent_balance_finished_tasks_int=(100/len(last_week_tasks))*last_week_finished_tasks
+
+    percent_balance_weekly_finished_tasks_compared_to_last_week_int = percent_balance_weekly_finished_tasks_int - last_week_percent_balance_finished_tasks_int
+    if(percent_balance_weekly_finished_tasks_compared_to_last_week_int>0):
+        percent_balance_weekly_finished_tasks_compared_to_last_week=f"С {percent_balance_weekly_finished_tasks_compared_to_last_week_int}% по-добре от миналата седмица"
+    elif(percent_balance_weekly_finished_tasks_compared_to_last_week_int<0):
+        percent_balance_weekly_finished_tasks_compared_to_last_week=f"С {-percent_balance_weekly_finished_tasks_compared_to_last_week_int}% по-зле от миналата седмица"
+    else:
+        percent_balance_weekly_finished_tasks_compared_to_last_week=f"Същото като миналата седмица"
+    
+    days_finished_tasks=[]
+    days_total_tasks=[]
+        
 
 if(__name__ == "__main__"):
     app.run(debug=True)
