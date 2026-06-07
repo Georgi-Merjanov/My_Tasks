@@ -425,6 +425,14 @@ def delete_user(user_id):
     return "", 204
 
 
+def get_week_range(offset=0):
+    week=get_current_week(offset)
+    week_range={
+        "monday": week.get("monday"),
+        "sunday": week.get("sunday")}
+    return week_range
+
+
 @app.route("/statistics", methods=["GET"])
 def statistics():
     if("user_id" not in session):
