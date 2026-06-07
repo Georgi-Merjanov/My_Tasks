@@ -431,6 +431,12 @@ def get_week_range(offset=0):
         "monday": week.get("monday"),
         "sunday": week.get("sunday")}
     return week_range
+    
+
+def get_all_finished_tasks_count(user_id):
+    all_finished_tasks=db.session.execute(db.select(Task).filter_by(user_id=user_id, is_finished=True)).scalars().all()
+    count=len(all_finished_tasks)
+    return count
 
 
 @app.route("/statistics", methods=["GET"])
