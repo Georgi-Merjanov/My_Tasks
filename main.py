@@ -1,9 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 from werkzeug.security import check_password_hash, generate_password_hash
-from flask_migrate import Migrate
-from password import password
-from models import db, User, Task
 from datetime import date, timedelta
+from flask_migrate import Migrate
+from models import db, User, Task
+from password import password
 import os
 
 app=Flask(__name__)
