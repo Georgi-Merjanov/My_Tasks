@@ -1,12 +1,60 @@
 {% extends 'base.html' %}
 
-
 {% block head %}
-    <title>Профил</title>
-    <link rel="stylesheet" href="{{url_for('static', filename='css/profile.css')}}">
+    <title>Статистики</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/statistics.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 {% endblock %}
 
-
 {% block body %}
-<h1>Статистики</h1>
+<main>
+    
+    <section>
+        <div>
+            <img src="{{ url_for('static', filename='pictures/fire.png') }}">
+            <div>
+                <span>Win Streak</span>
+                <span>5 дни</span>
+            </div>
+        </div>
+
+        <div>
+            <img src="{{ url_for('static', filename='pictures/trophy.png') }}">
+            <div>
+                <span>Общо завършени</span>
+                <span>142 задачи</span>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        
+        <div>
+            <button id="prev_week_button">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            
+            <div>
+                <h2>Седмица: 01.06 - 07.06</h2>
+                <h3>Общо: 14 / 20 изпълнени задачи</h3>
+                <p>
+                    <span>Успеваемост: 70%</span>
+                    <span class="divider">|</span>
+                    <span id="balance_status" class="better_status">С 15% по-добре от миналата седмица</span>
+                </p>
+            </div>
+            
+            <button id="next_week_button" disabled>
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </div>
+
+        <div>
+            <canvas id="weekly_chart"></canvas>
+        </div>
+
+    </section>
+
+</main>
 {% endblock %}
