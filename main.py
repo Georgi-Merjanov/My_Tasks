@@ -425,6 +425,18 @@ def delete_user(user_id):
     return "", 204
 
 
+@app.route("/statistics", methods=["GET"])
+def statistics():
+    if("user_id" not in session):
+        return jsonify({"error": "Не сте удостоверен в системата!"}), 401
+
+    user=get_user()
+    if(not user):
+        return jsonify({"error": "Потребителят не е намерен!"}), 404
+    
+    return render_template("statistics.html", user=get_user())
+
+
 def get_week_range(offset=0):
     week=get_current_week(offset)
     week_range={
@@ -454,8 +466,8 @@ def get_win_streak(user_id):
     return win_streak
 
 
-@app.route("/statistics", methods=["GET"])
-def statistics():
+@app.route("/statistics/data", methods=["GET"])
+def statistics_data():
     if("user_id" not in session):
         return jsonify({"error": "Не сте удостоверен в системата!"}), 401
 
@@ -463,8 +475,8 @@ def statistics():
     if(not user):
         return jsonify({"error": "Потребителят не е намерен!"}), 404
     
-    return render_template("statistics.html", user=get_user())
-
+    offset=request.args.get("offset", type=int, default=0)
+    week_range=get_week_range(offset)
 
 if(__name__ == "__main__"):
     app.run(debug=True)
