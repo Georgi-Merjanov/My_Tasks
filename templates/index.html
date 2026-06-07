@@ -204,15 +204,16 @@
                                     </button>
                                 `;
 
-                                if(task.day_for<today_str)
+                                if(task.is_finished)
+                                    css_class="is-finished";
+
+                                if(task.day_for < today_str)
                                     {onclick_handler = "";
                                     menu_button = "";
                                     cursor_style = 'style="cursor: not-allowed;"';
-
-                                    if(task.is_finished)
-                                        css_class = "is-finished";
-                                    else
-                                        css_class = "is-not-finished";}
+                                    
+                                    if(!task.is_finished)
+                                        css_class="is-not-finished";}
 
                                 const task_html = `
                                     <div class="task-box ${css_class}" data-id="${task.id}">
