@@ -244,7 +244,11 @@ def login():
 @app.route("/profile", methods=["GET"])
 def profile():
     if("user_id" not in session):
-        return jsonify({"error": "Нямате достъп!"}), 401
+        return jsonify({"error": "Не сте удостоверен в системата!"}), 401
+
+    user=get_user()
+    if(not user):
+        return jsonify({"error": "Потребителят не е намерен!"}), 404
     
     return render_template("profile.html", user=get_user())
 
@@ -423,6 +427,13 @@ def delete_user(user_id):
 
 @app.route("/statistics", methods=["GET"])
 def statistics():
+    if("user_id" not in session):
+        return jsonify({"error": "Не сте удостоверен в системата!"}), 401
+
+    user=get_user()
+    if(not user):
+        return jsonify({"error": "Потребителят не е намерен!"}), 404
+    
     return render_template("statistics.html", user=get_user())
 
 

@@ -119,7 +119,8 @@
     function Show_input(button_to_disappear)
         {const box_to_appear=button_to_disappear.previousElementSibling;
         button_to_disappear.classList.add("display_none");
-        box_to_appear.classList.remove("display_none");}
+        box_to_appear.classList.remove("display_none");
+        box_to_appear.querySelector("input").focus();}
     
     
     function Hide_input(button_to_disappear)
