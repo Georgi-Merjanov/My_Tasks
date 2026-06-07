@@ -1,3 +1,156 @@
-@import 'base';
+@import "base";
 
 
+main {
+    background-color: $bg-main;
+    min-height: calc(100vh - 5.5rem);
+    padding: 2rem;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    color: $text;
+
+    section:first-of-type {
+        display: flex;
+        gap: 2rem;
+        margin-bottom: 2rem;
+
+        & > div {
+            background-color: $bg-day;
+            border: 0.06rem solid $border;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            flex: 1;
+            box-shadow: 0 0.2rem 0.5rem rgba(0,0,0,0.02);
+
+            img {
+                width: 3.5rem;
+                height: 3.5rem;
+                object-fit: contain;
+            }
+
+            div {
+                display: flex;
+                flex-direction: column;
+                gap: 0.3rem;
+
+                span:first-child {
+                    font-size: 0.9rem;
+                    color: #7f8c8d;
+                }
+
+                span:last-child {
+                    font-size: 1.8rem;
+                    font-weight: bold;
+                    color: $text-dark;
+                }
+            }
+        }
+    }
+
+    section:last-of-type {
+        background-color: $bg-day;
+        border: 0.06rem solid $border;
+        border-radius: 0.5rem;
+        padding: 2rem;
+        box-shadow: 0 0.2rem 0.5rem rgba(0,0,0,0.02);
+        width: 100%;
+        box-sizing: border-box;
+
+        & > div:first-child {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+            position: relative;
+            width: 100%;
+
+            button {
+                background-color: $bg-day;
+                border: 0.06rem solid $border;
+                color: $primary-main;
+                width: 3rem;
+                height: 3rem;
+                border-radius: 50%;
+                cursor: pointer;
+                transition: all $transition-speed;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.2rem;
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+
+                &:hover:not(:disabled) {
+                    background-color: $primary-main;
+                    color: white;
+                    border-color: $primary-border;
+                }
+
+                &:disabled {
+                    opacity: 0.3;
+                    cursor: not-allowed;
+                }
+            }
+
+            #prev_week_button {
+                left: 20%;
+            }
+
+            #next_week_button {
+                right: 20%;
+            }
+
+            div:not([id]) {
+                text-align: center;
+
+                h2 {
+                    margin: 0 0 0.3rem 0;
+                    font-size: 1.5rem;
+                    color: $text-dark;
+                }
+
+                h3 {
+                    margin: 0 0 0.6rem 0;
+                    font-size: 1.2rem;
+                    font-weight: 600;
+                    color: $text;
+                }
+
+                p {
+                    margin: 0;
+                    font-size: 1rem;
+                    color: #7f8c8d;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 0.7rem;
+
+                    .divider {
+                        color: $border;
+                        font-weight: normal;
+                    }
+
+                    .better_status {
+                        color: $add;
+                        font-weight: bold;
+                    }
+
+                    .worse_status {
+                        color: $delete;
+                        font-weight: bold;
+                    }
+                }
+            }
+        }
+
+        & > div:last-child {
+            position: relative;
+            height: 25rem;
+            width: 100%;
+        }
+    }
+}

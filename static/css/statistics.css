@@ -69,4 +69,142 @@ nav #nav-right img[alt="Профилна снимка"] {
 }
 nav #nav-right img.placeholder {
   border: none !important;
+}
+
+.display_none {
+  display: none !important;
+}
+
+main {
+  background-color: #fdfaf1;
+  min-height: calc(100vh - 5.5rem);
+  padding: 2rem;
+  box-sizing: border-box;
+  font-family: sans-serif;
+  color: #2c3e50;
+}
+main section:first-of-type {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+main section:first-of-type > div {
+  background-color: #ffffff;
+  border: 0.06rem solid #e0d7c1;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex: 1;
+  box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.02);
+}
+main section:first-of-type > div img {
+  width: 3.5rem;
+  height: 3.5rem;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+main section:first-of-type > div div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+main section:first-of-type > div div span:first-child {
+  font-size: 0.9rem;
+  color: #7f8c8d;
+}
+main section:first-of-type > div div span:last-child {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #333;
+}
+main section:last-of-type {
+  background-color: #ffffff;
+  border: 0.06rem solid #e0d7c1;
+  border-radius: 0.5rem;
+  padding: 2rem;
+  box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.02);
+  width: 100%;
+  box-sizing: border-box;
+}
+main section:last-of-type > div:first-child {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+  position: relative;
+  width: 100%;
+}
+main section:last-of-type > div:first-child button {
+  background-color: #ffffff;
+  border: 0.06rem solid #e0d7c1;
+  color: #4a90e2;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+main section:last-of-type > div:first-child button:hover:not(:disabled) {
+  background-color: #4a90e2;
+  color: white;
+  border-color: #357abd;
+}
+main section:last-of-type > div:first-child button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+main section:last-of-type > div:first-child #prev_week_button {
+  left: 20%;
+}
+main section:last-of-type > div:first-child #next_week_button {
+  right: 20%;
+}
+main section:last-of-type > div:first-child div:not([id]) {
+  text-align: center;
+}
+main section:last-of-type > div:first-child div:not([id]) h2 {
+  margin: 0 0 0.3rem 0;
+  font-size: 1.5rem;
+  color: #333;
+}
+main section:last-of-type > div:first-child div:not([id]) h3 {
+  margin: 0 0 0.6rem 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+main section:last-of-type > div:first-child div:not([id]) p {
+  margin: 0;
+  font-size: 1rem;
+  color: #7f8c8d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+}
+main section:last-of-type > div:first-child div:not([id]) p .divider {
+  color: #e0d7c1;
+  font-weight: normal;
+}
+main section:last-of-type > div:first-child div:not([id]) p .better_status {
+  color: #2ecc71;
+  font-weight: bold;
+}
+main section:last-of-type > div:first-child div:not([id]) p .worse_status {
+  color: #e74c3c;
+  font-weight: bold;
+}
+main section:last-of-type > div:last-child {
+  position: relative;
+  height: 25rem;
+  width: 100%;
 }/*# sourceMappingURL=statistics.css.map */
