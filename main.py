@@ -439,6 +439,21 @@ def get_all_finished_tasks_count(user_id):
     return count
 
 
+def get_win_streak(user_id):
+    win_streak=0
+    today=date.today()
+    while True:
+        tasks=db.session.execute(db.select(Task).filter_by(user_id=user_id, day_for=today)).scalars().all()
+        finished_tasks=[task for task in tasks if task.is_finished]
+        if(tasks):
+            if(len(tasks)==len(finished_tasks)):
+                win_streak+=1
+            else:
+                break
+        today-=timedelta(days=1)
+    return win_streak
+
+
 @app.route("/statistics", methods=["GET"])
 def statistics():
     if("user_id" not in session):
