@@ -59,8 +59,11 @@
 </main>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function()
-        {fetch("/statistics/data")
+    let current_offset = 0;
+    let weekly_chart_instance = null;
+
+    function Fetch_statistics()
+        {fetch("/statistics/data?offset=" + current_offset)
         .then((response) => response.json().then((data) => ({status: response.status, body: data})))
         .then((result) =>
             {if(result.status===200)
@@ -74,12 +77,77 @@
                 const status_text = result.body.percent_balance_weekly_finished_tasks_compared_to_last_week;
                 status_element.innerText = status_text;
                 
+                status_element.classList.remove("better_status", "worse_status", "neutral_status");
                 if(status_text.includes("по-добре"))
                     status_element.classList.add("better_status");
                 else
                     {if(status_text.includes("по-зле"))
                         status_element.classList.add("worse_status");
                     else
-                        status_element.classList.add("neutral_status");}}});});
+                        status_element.classList.add("neutral_status");}
+
+                const next_button = document.getElementById("next_week_button");
+                if(current_offset>=0)
+                    next_button.disabled=true;
+                else
+                    next_button.disabled=false;
+
+                const days_names = ["Понеделник", "Вторник", "Сряда", "Четвъртък", "Петък", "Събота", "Неделя"];
+                const chart_labels = [];
+                const finished_tasks_data = [];
+                const remaining_tasks_data = [];
+
+                result.body.days_finished_from_total_tasks.forEach((day, index) =>
+                    {chart_labels.push(days_names[index] + " (" + day.finished + " / " + day.total + ")");
+                    finished_tasks_data.push(day.finished);
+                    const remaining = day.total - day.finished;
+                    remaining_tasks_data.push(remaining > 0 ? remaining : 0);});
+
+                const ctx = document.getElementById("weekly_chart").getContext("2d");
+                
+                if(weekly_chart_instance)
+                    {weekly_chart_instance.destroy();}
+
+                weekly_chart_instance=new Chart(ctx, {
+                    type: "bar",
+                    data: {
+                        labels: chart_labels,
+                        datasets: [
+                            {data: finished_tasks_data,
+                            backgroundColor: "#4a90e2",
+                            borderWidth: 0},
+                            {data: remaining_tasks_data,
+                            backgroundColor: "#b3d4fc",
+                            borderWidth: 0}]},
+                    options: {
+                        plugins: {
+                            legend: {
+                                display: false}},
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                stacked: true},
+                            y: {
+                                stacked: true,
+                                beginAtZero: true,
+                                max: 10,
+                                ticks: {
+                                    stepSize: 1,
+                                    callback: function(value) 
+                                        {if(value === 10)
+                                            return "10+";
+                                        return value;}}}}}});}});}
+
+    document.addEventListener("DOMContentLoaded", function()
+        {Fetch_statistics();
+        
+        document.getElementById("prev_week_button").addEventListener("click", function()
+            {current_offset-=1;
+            Fetch_statistics();});
+            
+        document.getElementById("next_week_button").addEventListener("click", function()
+            {current_offset+=1;
+            Fetch_statistics();});});
 </script>
 {% endblock %}
