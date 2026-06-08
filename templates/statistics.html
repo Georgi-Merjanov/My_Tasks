@@ -98,7 +98,7 @@
                 const remaining_tasks_data = [];
 
                 result.body.days_finished_from_total_tasks.forEach((day, index) =>
-                    {chart_labels.push(days_names[index] + " (" + day.finished + " / " + day.total + ")");
+                    {chart_labels.push(days_names[index] + " (" + day.finished + " / " + day.total + " задачи )");
                     finished_tasks_data.push(day.finished);
                     const remaining = day.total - day.finished;
                     remaining_tasks_data.push(remaining > 0 ? remaining : 0);});
