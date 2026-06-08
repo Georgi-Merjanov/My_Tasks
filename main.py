@@ -480,7 +480,7 @@ def statistics_data():
     
     offset=request.args.get("offset", type=int, default=0)
     week_range=get_week_range(offset)
-    week_range_string=f"{(week_range.get('monday')).day}.{(week_range.get('monday')).month} - {(week_range.get('sunday')).day}.{(week_range.get('sunday')).month}"
+    week_range_string=f"{(week_range.get('monday')).day:02d}.{(week_range.get('monday')).month:02d} - {(week_range.get('sunday')).day:02d}.{(week_range.get('sunday')).month:02d}"
 
     total_finished_tasks_count=get_total_finished_tasks_count(user.id)
     win_streak=get_win_streak(user.id)
