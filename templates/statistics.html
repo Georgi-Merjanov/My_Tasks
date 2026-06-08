@@ -57,4 +57,29 @@
     </section>
 
 </main>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function()
+        {fetch("/statistics/data")
+        .then((response) => response.json().then((data) => ({status: response.status, body: data})))
+        .then((result) =>
+            {if(result.status===200)
+                {document.getElementById("win_streak_value").innerText = result.body.win_streak + " дни";
+                document.getElementById("total_finished_value").innerText = result.body.total_finished_tasks_count + " задачи";
+                document.getElementById("week_range_title").innerText = "Седмица: " + result.body.week_range;
+                document.getElementById("weekly_balance_title").innerText = "Общо: " + result.body.balance_weekly_finished_tasks + " изпълнени задачи";
+                document.getElementById("weekly_percent_value").innerText = "Успеваемост: " + result.body.percent_balance_weekly_finished_tasks;
+                
+                const status_element = document.getElementById("balance_status");
+                const status_text = result.body.percent_balance_weekly_finished_tasks_compared_to_last_week;
+                status_element.innerText = status_text;
+                
+                if(status_text.includes("по-добре"))
+                    status_element.classList.add("better_status");
+                else
+                    {if(status_text.includes("по-зле"))
+                        status_element.classList.add("worse_status");
+                    else
+                        status_element.classList.add("neutral_status");}}});});
+</script>
 {% endblock %}
