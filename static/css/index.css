@@ -103,7 +103,7 @@ main > div:first-of-type h2 {
   justify-content: center;
   align-items: center;
 }
-main > div:first-of-type a {
+main > div:first-of-type button {
   text-decoration: none;
   background-color: #4a90e2;
   color: white;
@@ -113,11 +113,11 @@ main > div:first-of-type a {
   border-radius: 0.5rem;
   cursor: pointer;
   transition: background-color 0.3s;
-  width: 1.5rem;
+  width: 4rem;
   text-align: center;
   flex-shrink: 0;
 }
-main > div:first-of-type a:hover {
+main > div:first-of-type button:hover {
   background-color: #7cb5f9;
 }
 main > div:nth-of-type(2), main > div:nth-of-type(3) {

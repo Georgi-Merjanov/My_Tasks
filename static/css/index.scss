@@ -30,7 +30,7 @@ main {
             align-items: center;
         }
 
-        a {
+        button {
             text-decoration: none;
             background-color: $primary-main;
             color: white;
@@ -40,7 +40,7 @@ main {
             border-radius: 0.5rem;
             cursor: pointer;
             transition: background-color $transition-speed;
-            width: 1.5rem;
+            width: 4rem;
             text-align: center;
             flex-shrink: 0;
 
