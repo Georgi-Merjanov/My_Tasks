@@ -115,9 +115,13 @@
                         datasets: [
                             {data: finished_tasks_data,
                             backgroundColor: "#4a90e2",
+                            borderRadius: function(context)
+                                {const index = context.dataIndex;
+                                return remaining_tasks_data[index]===0 ? {topLeft: 5, topRight: 5} : 0;},
                             borderWidth: 0},
                             {data: remaining_tasks_data,
                             backgroundColor: "#b3d4fc",
+                            borderRadius: {topLeft: 5, topRight: 5},
                             borderWidth: 0}]},
                     options: {
                         plugins: {

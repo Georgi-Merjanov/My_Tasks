@@ -77,16 +77,18 @@ nav #nav-right img.placeholder {
 
 main {
   background-color: #fdfaf1;
-  min-height: calc(100vh - 5.5rem);
+  height: calc(100vh - 5.5rem);
   padding: 2rem;
   box-sizing: border-box;
   font-family: sans-serif;
   color: #2c3e50;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 main section:first-of-type {
   display: flex;
   gap: 2rem;
-  margin-bottom: 2rem;
 }
 main section:first-of-type > div {
   background-color: #ffffff;
@@ -123,16 +125,20 @@ main section:last-of-type {
   background-color: #ffffff;
   border: 0.06rem solid #e0d7c1;
   border-radius: 0.5rem;
-  padding: 2rem;
+  padding: 1.5rem;
   box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.02);
   width: 100%;
   box-sizing: border-box;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 main section:last-of-type > div:first-child {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   position: relative;
   width: 100%;
 }
@@ -209,6 +215,7 @@ main section:last-of-type > div:first-child div:not([id]) p .neutral_status {
 }
 main section:last-of-type > div:last-child {
   position: relative;
-  height: 25rem;
+  flex: 1;
   width: 100%;
+  min-height: 0;
 }/*# sourceMappingURL=statistics.css.map */
