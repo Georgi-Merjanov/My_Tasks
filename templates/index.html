@@ -11,12 +11,12 @@
 {% block body %}
 <main>
     <div>
-        <button id="prev_week_btn">&lt;</button>
+        <button onclick="Change_week(-1)">&lt;</button>
         <h2>
             <span id="week_month_title" style="margin-right: 2rem;"></span>
             <span id="week_year_title"></span>
         </h2>
-        <button id="next_week_btn">&gt;</button>
+        <button onclick="Change_week(1)">&gt;</button>
     </div>
 
     <div>
