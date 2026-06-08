@@ -445,9 +445,9 @@ def get_week_range(offset=0):
     return week_range
     
 
-def get_all_finished_tasks_count(user_id):
-    all_finished_tasks=db.session.execute(db.select(Task).filter_by(user_id=user_id, is_finished=True)).scalars().all()
-    count=len(all_finished_tasks)
+def get_total_finished_tasks_count(user_id):
+    total_finished_tasks=db.session.execute(db.select(Task).filter_by(user_id=user_id, is_finished=True)).scalars().all()
+    count=len(total_finished_tasks)
     return count
 
 
@@ -456,7 +456,7 @@ def get_win_streak(user_id):
     today=date.today()
     while True:
         tasks=db.session.execute(db.select(Task).filter_by(user_id=user_id, day_for=today)).scalars().all()
-        finished_tasks=[task for task in tasks if task.is_finished]
+        finished_tasks=[task for task in tasks if(task.is_finished)]
         if(tasks):
             if(len(tasks)==len(finished_tasks)):
                 win_streak+=1
@@ -477,31 +477,54 @@ def statistics_data():
     
     offset=request.args.get("offset", type=int, default=0)
     week_range=get_week_range(offset)
-    all_finished_tasks_count=get_all_finished_tasks_count(user.id)
+    week_range_string=f"{(week_range.get('monday')).day}.{(week_range.get('monday')).month} - {(week_range.get('sunday')).day}.{(week_range.get('sunday')).month}"
+
+    total_finished_tasks_count=get_total_finished_tasks_count(user.id)
     win_streak=get_win_streak(user.id)
 
     weekly_tasks=db.session.execute(db.select(Task).filter(Task.user_id==user.id, Task.day_for>=week_range.get("monday"), Task.day_for<=week_range.get("sunday"))).scalars().all()
-    weekly_finished_tasks=[task for task in weekly_tasks if task.is_finished]
-    balance_weekly_finished_tasks=f"{len(weekly_finished_tasks)} / {len(weekly_tasks)}"
-    percent_balance_weekly_finished_tasks_int=(100/len(weekly_tasks))*weekly_finished_tasks
-    percent_balance_weekly_finished_tasks=f"{(100/len(weekly_tasks))*weekly_finished_tasks}%"
+    weekly_finished_tasks=len([task for task in weekly_tasks if(task.is_finished)])
+    balance_weekly_finished_tasks=f"{weekly_finished_tasks} / {len(weekly_tasks)}"
+    if(len(weekly_tasks)==0):
+        percent_balance_weekly_finished_tasks_int=0
+        percent_balance_weekly_finished_tasks="0%"
+    else:
+        percent_balance_weekly_finished_tasks_int=(100/len(weekly_tasks))*weekly_finished_tasks
+        percent_balance_weekly_finished_tasks=f"{(100/len(weekly_tasks))*weekly_finished_tasks}%"
 
     last_week_range=get_week_range(offset-1)
     last_week_tasks=db.session.execute(db.select(Task).filter(Task.user_id==user.id, Task.day_for>=last_week_range.get("monday"), Task.day_for<=last_week_range.get("sunday"))).scalars().all()
-    last_week_finished_tasks=[task for task in last_week_tasks if task.is_finished]
-    last_week_percent_balance_finished_tasks_int=(100/len(last_week_tasks))*last_week_finished_tasks
+    last_week_finished_tasks=len([task for task in last_week_tasks if(task.is_finished)])
+    if(len(last_week_tasks)==0):
+        last_week_percent_balance_finished_tasks_int=0
+    else:
+        last_week_percent_balance_finished_tasks_int=(100/len(last_week_tasks))*last_week_finished_tasks
 
     percent_balance_weekly_finished_tasks_compared_to_last_week_int = percent_balance_weekly_finished_tasks_int - last_week_percent_balance_finished_tasks_int
     if(percent_balance_weekly_finished_tasks_compared_to_last_week_int>0):
-        percent_balance_weekly_finished_tasks_compared_to_last_week=f"С {percent_balance_weekly_finished_tasks_compared_to_last_week_int}% по-добре от миналата седмица"
+        percent_balance_weekly_finished_tasks_compared_to_last_week = f"С {percent_balance_weekly_finished_tasks_compared_to_last_week_int}% по-добре от миналата седмица"
     elif(percent_balance_weekly_finished_tasks_compared_to_last_week_int<0):
-        percent_balance_weekly_finished_tasks_compared_to_last_week=f"С {-percent_balance_weekly_finished_tasks_compared_to_last_week_int}% по-зле от миналата седмица"
+        percent_balance_weekly_finished_tasks_compared_to_last_week = f"С {-percent_balance_weekly_finished_tasks_compared_to_last_week_int}% по-зле от миналата седмица"
     else:
-        percent_balance_weekly_finished_tasks_compared_to_last_week=f"Същото като миналата седмица"
+        percent_balance_weekly_finished_tasks_compared_to_last_week = f"Същото като миналата седмица"
     
-    days_finished_tasks=[]
-    days_total_tasks=[]
-        
+    days_finished_from_total_tasks=[]
+    for i in range(7):
+        current_date=week_range.get("monday")+timedelta(days=i)
+        day_total_tasks = [task for task in weekly_tasks if(task.day_for==current_date)]
+        day_finished_tasks=[task for task in day_total_tasks if(task.is_finished)]
+        days_finished_from_total_tasks.append({"finished": len(day_finished_tasks), "total": len(day_total_tasks)})
+    
+    dictionary={
+        "win_streak": win_streak,
+        "total_finished_tasks_count": total_finished_tasks_count,
+        "week_range": week_range_string,
+        "balance_weekly_finished_tasks": balance_weekly_finished_tasks,
+        "percent_balance_weekly_finished_tasks": percent_balance_weekly_finished_tasks,
+        "percent_balance_weekly_finished_tasks_compared_to_last_week": percent_balance_weekly_finished_tasks_compared_to_last_week,
+        "days_finished_from_total_tasks": days_finished_from_total_tasks}
+    
+    return jsonify(dictionary), 200
 
 if(__name__ == "__main__"):
     app.run(debug=True)
