@@ -197,34 +197,39 @@
                 const days_keys=["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
                 
                 days_keys.forEach((day) =>
-                    {const day_wrapper = document.getElementById("day-" + day) || document.getElementById("today-box");
+                    {const day_wrapper = document.getElementById("day-" + day);
                     const container=day_wrapper.querySelector(".tasks-container");
                     const num_span=day_wrapper.querySelector(".day-number");
                     
                     container.innerHTML = "";
                     
-                    if(result.body.days[day]===result.body.today_iso)
-                        day_wrapper.setAttribute("id", "today-box");
+                    if(result.body.days[day] === result.body.today_iso)
+                        day_wrapper.classList.add("today-active-style");
                     else
-                        day_wrapper.setAttribute("id", "day-" + day);
+                        day_wrapper.classList.remove("today-active-style");
 
                     num_span.innerText = result.body.days_numbers[day];
                     container.setAttribute("data-date", result.body.days[day]);
 
                     const existing_expired_text = day_wrapper.querySelector(".day-expired-text");
-                    if(existing_expired_text) 
+                    if(existing_expired_text)
                         existing_expired_text.remove();
 
-                    const add_button=day_wrapper.querySelector(".add-task-button");
-                    const add_box=day_wrapper.querySelector(".add-task-box");
+                    const add_button = day_wrapper.querySelector(".add-task-button");
+                    const add_box = day_wrapper.querySelector(".add-task-box");
                     
-                    if(result.body.days[day]<result.body.today_iso)
-                        {if(add_button) add_button.style.display = "none";
-                        if(add_box) add_box.style.display = "none";
+                    if(result.body.days[day] < result.body.today_iso)
+                        {if(add_button)
+                            add_button.style.display = "none";
+                        if(add_box)
+                            add_box.style.display = "none";
                         container.insertAdjacentHTML("afterend", `<span class="day-expired-text">Денят е свършил</span>`);}
                     else
-                        {if(add_button) add_button.style.display = "block";
-                        if(add_box) add_box.classList.add("display_none");}});
+                        {if(add_button)
+                            add_button.style.display = "";
+                        if(add_box) 
+                            {add_box.style.display = "";
+                            add_box.classList.add("display_none");}}});
 
                 result.body.tasks.forEach((task) =>
                     {const day_container = document.querySelector(`[data-date="${task.day_for}"]`);
@@ -239,14 +244,14 @@
                         `;
 
                         if(task.is_finished)
-                            css_class="is-finished";
+                            css_class = "is-finished";
 
-                        if(task.day_for<result.body.today_iso)
+                        if(task.day_for < result.body.today_iso)
                             {onclick_handler = "";
                             menu_button = "";
-                            cursor_style='style="cursor: not-allowed;"';
+                            cursor_style = 'style="cursor: not-allowed;"';
                             if(!task.is_finished)
-                                css_class="is-not-finished";}
+                                css_class = "is-not-finished";}
 
                         const task_html = `
                             <div class="task-box ${css_class}" data-id="${task.id}">

@@ -444,11 +444,11 @@ main {
 }
 
 
-#today-box {
-    background-color: #eafbfa;
-    border-color: #9b9485;
+.day-box.today-active-style {
+    background-color: #eafbfa !important;
+    border-color: #9b9485 !important;
 
-    span{
+    span {
         border-color: #9b9485;
     }
 }
