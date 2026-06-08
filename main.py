@@ -453,16 +453,19 @@ def get_total_finished_tasks_count(user_id):
 
 def get_win_streak(user_id):
     win_streak=0
-    today=date.today()
+    yesterday=date.today()-timedelta(days=1)
+    first_task = db.session.execute(db.select(Task).filter_by(user_id=user_id).order_by(Task.day_for.asc())).scalars().first()
     while True:
-        tasks=db.session.execute(db.select(Task).filter_by(user_id=user_id, day_for=today)).scalars().all()
+        tasks=db.session.execute(db.select(Task).filter_by(user_id=user_id, day_for=yesterday)).scalars().all()
         finished_tasks=[task for task in tasks if(task.is_finished)]
+        if(not first_task or yesterday<first_task.day_for):
+            break
         if(tasks):
             if(len(tasks)==len(finished_tasks)):
                 win_streak+=1
             else:
                 break
-        today-=timedelta(days=1)
+        yesterday-=timedelta(days=1)
     return win_streak
 
 
