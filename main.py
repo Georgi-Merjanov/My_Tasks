@@ -490,7 +490,7 @@ def statistics_data():
         percent_balance_weekly_finished_tasks="0%"
     else:
         percent_balance_weekly_finished_tasks_int=(100/len(weekly_tasks))*weekly_finished_tasks
-        percent_balance_weekly_finished_tasks=f"{(100/len(weekly_tasks))*weekly_finished_tasks}%"
+        percent_balance_weekly_finished_tasks=f"{((100/len(weekly_tasks))*weekly_finished_tasks):.2f}%"
 
     last_week_range=get_week_range(offset-1)
     last_week_tasks=db.session.execute(db.select(Task).filter(Task.user_id==user.id, Task.day_for>=last_week_range.get("monday"), Task.day_for<=last_week_range.get("sunday"))).scalars().all()
@@ -502,9 +502,9 @@ def statistics_data():
 
     percent_balance_weekly_finished_tasks_compared_to_last_week_int = percent_balance_weekly_finished_tasks_int - last_week_percent_balance_finished_tasks_int
     if(percent_balance_weekly_finished_tasks_compared_to_last_week_int>0):
-        percent_balance_weekly_finished_tasks_compared_to_last_week = f"С {percent_balance_weekly_finished_tasks_compared_to_last_week_int}% по-добре от миналата седмица"
+        percent_balance_weekly_finished_tasks_compared_to_last_week = f"С {percent_balance_weekly_finished_tasks_compared_to_last_week_int:.2f}% по-добре от миналата седмица"
     elif(percent_balance_weekly_finished_tasks_compared_to_last_week_int<0):
-        percent_balance_weekly_finished_tasks_compared_to_last_week = f"С {-percent_balance_weekly_finished_tasks_compared_to_last_week_int}% по-зле от миналата седмица"
+        percent_balance_weekly_finished_tasks_compared_to_last_week = f"С {-percent_balance_weekly_finished_tasks_compared_to_last_week_int:.2f}% по-зле от миналата седмица"
     else:
         percent_balance_weekly_finished_tasks_compared_to_last_week = f"Същото като миналата седмица"
     
