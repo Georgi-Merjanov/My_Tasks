@@ -71,10 +71,51 @@ def home():
     if("user_id" not in session):
         return redirect(url_for("login"))
     
-    offset=request.args.get("offset", type=int, default=0)
     user=get_user()
+    return render_template("index.html", user=user)
+
+
+@app.route("/week/data", methods=["GET"])
+def get_week_data():
+    if("user_id" not in session):
+        return jsonify({"error": "Не сте удостоверен в системата!"}), 401
+
+    user=get_user()
+    if(not user):
+        return jsonify({"error": "Потребителят не е намерен!"}), 404
+
+    offset=request.args.get("offset", type=int, default=0)
     week=get_current_week(offset)
-    return render_template("index.html", user=user, week=week, offset=offset, today=date.today())
+
+    start_date=week["monday"]
+    end_date=week["sunday"]
+    
+    tasks=db.session.execute(
+        db.select(Task).filter(Task.user_id==user.id, Task.day_for>=start_date, Task.day_for<=end_date).order_by(Task.is_finished, Task.id.desc())).scalars().all()
+
+    response_data={
+        "month": week["month"],
+        "year": week["year"],
+        "today_iso": date.today().isoformat(),
+        "days": {
+            "monday": week["monday"].isoformat(),
+            "tuesday": week["tuesday"].isoformat(),
+            "wednesday": week["wednesday"].isoformat(),
+            "thursday": week["thursday"].isoformat(),
+            "friday": week["friday"].isoformat(),
+            "saturday": week["saturday"].isoformat(),
+            "sunday": week["sunday"].isoformat()},
+        "days_numbers": {
+            "monday": week["monday"].day,
+            "tuesday": week["tuesday"].day,
+            "wednesday": week["wednesday"].day,
+            "thursday": week["thursday"].day,
+            "friday": week["friday"].day,
+            "saturday": week["saturday"].day,
+            "sunday": week["sunday"].day},
+        "tasks": [dictify(task) for task in tasks]}
+
+    return jsonify(response_data), 200
 
 
 def dictify(task):
