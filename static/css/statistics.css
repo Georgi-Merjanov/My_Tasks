@@ -203,6 +203,10 @@ main section:last-of-type > div:first-child div:not([id]) p .worse_status {
   color: #e74c3c;
   font-weight: bold;
 }
+main section:last-of-type > div:first-child div:not([id]) p .neutral_status {
+  color: #7f8c8d;
+  font-weight: bold;
+}
 main section:last-of-type > div:last-child {
   position: relative;
   height: 25rem;
