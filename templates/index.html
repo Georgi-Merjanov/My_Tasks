@@ -143,38 +143,38 @@
         const task_date=task_container.getAttribute("data-date");
 
         fetch("/tasks", {method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({name: task_name, day_for: task_date})})
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({name: task_name, day_for: task_date})})
         .then((response) => response.json().then((data) => ({status: response.status, body: data})))
         .then((result) =>
-                {if (result.status===201) 
-                        {const task_html = `
-                            <div class="task-box" data-id="${result.body.id}">
-                                <div class="task-checkbox" onclick="Toggle_task(this)"></div>
-                                <span class="task-text">${result.body.name}</span>
-                                <button class="task-menu-button" onclick="Toggle_menu(this)">
-                                        <i class="fa-solid fa-ellipsis-v"></i>
+            {if (result.status===201)
+                {const task_html = `
+                    <div class="task-box" data-id="${result.body.id}">
+                        <div class="task-checkbox" onclick="Toggle_task(this)"></div>
+                        <span class="task-text">${result.body.name}</span>
+                        <button class="task-menu-button" onclick="Toggle_menu(this)">
+                                <i class="fa-solid fa-ellipsis-v"></i>
+                        </button>
+                        <div class="task-menu display_none">
+                            <div class="menu-options">
+                                <button class="edit-task-button" onclick="Edit_task(this)">
+                                    <i class="fa-solid fa-pen"></i> Редактирай
                                 </button>
-                                <div class="task-menu display_none">
-                                    <div class="menu-options">
-                                        <button class="edit-task-button" onclick="Edit_task(this)">
-                                            <i class="fa-solid fa-pen"></i> Редактирай
-                                        </button>
-                                        <button class="delete-task-button" onclick="Delete_task(this)">
-                                            <i class="fa-solid fa-trash"></i> Изтрий
-                                        </button>
-                                    </div>
-                                    <button class="close-menu-button" onclick="Toggle_menu(this)">
-                                        <i class="fa-solid fa-xmark"></i>
-                                    </button>
-                                </div>
+                                <button class="delete-task-button" onclick="Delete_task(this)">
+                                    <i class="fa-solid fa-trash"></i> Изтрий
+                                </button>
                             </div>
-                    `;
-                        task_container.insertAdjacentHTML("afterbegin", task_html);
-                        
-                        add_task_box.classList.add("display_none");
-                        add_task_box.nextElementSibling.classList.remove("display_none");
-                        input.value = "";}});}
+                            <button class="close-menu-button" onclick="Toggle_menu(this)">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+                    </div>
+            `;
+                task_container.insertAdjacentHTML("afterbegin", task_html);
+                
+                add_task_box.classList.add("display_none");
+                add_task_box.nextElementSibling.classList.remove("display_none");
+                input.value = "";}});}
     
 
     document.addEventListener("DOMContentLoaded", function()
@@ -190,56 +190,56 @@
                     container.insertAdjacentHTML("afterend", `<span class="day-expired-text">Денят е свършил</span>`);}}});
                 
                 fetch("/tasks", {method: "GET"})
-                .then((response) => response.json().then((data) => ({status: response.status, body: data})))
-                .then((result) =>
-                    {if(result.status===200)
-                        {result.body.forEach((task) =>
-                            {const day_container = document.querySelector(`[data-date="${task.day_for}"]`);
-                            if(day_container)
-                                {let css_class = "";
-                                let onclick_handler = 'onclick="Toggle_task(this)"';
-                                let cursor_style = "";
-                                let menu_button = `
-                                    <button class="task-menu-button" onclick="Toggle_menu(this)">
-                                        <i class="fa-solid fa-ellipsis-v"></i>
-                                    </button>
-                                `;
+                    .then((response) => response.json().then((data) => ({status: response.status, body: data})))
+                    .then((result) =>
+                        {if(result.status===200)
+                            {result.body.forEach((task) =>
+                                {const day_container = document.querySelector(`[data-date="${task.day_for}"]`);
+                                if(day_container)
+                                    {let css_class = "";
+                                    let onclick_handler = 'onclick="Toggle_task(this)"';
+                                    let cursor_style = "";
+                                    let menu_button = `
+                                        <button class="task-menu-button" onclick="Toggle_menu(this)">
+                                            <i class="fa-solid fa-ellipsis-v"></i>
+                                        </button>
+                                    `;
 
-                                if(task.is_finished)
-                                    css_class="is-finished";
+                                    if(task.is_finished)
+                                        css_class="is-finished";
 
-                                if(task.day_for < today_str)
-                                    {onclick_handler = "";
-                                    menu_button = "";
-                                    cursor_style = 'style="cursor: not-allowed;"';
-                                    
-                                    if(!task.is_finished)
-                                        css_class="is-not-finished";}
+                                    if(task.day_for < today_str)
+                                        {onclick_handler = "";
+                                        menu_button = "";
+                                        cursor_style = 'style="cursor: not-allowed;"';
+                                        
+                                        if(!task.is_finished)
+                                            css_class="is-not-finished";}
 
-                                const task_html = `
-                                    <div class="task-box ${css_class}" data-id="${task.id}">
-                                        <div class="task-checkbox" ${onclick_handler} ${cursor_style}></div>
-                                        <span class="task-text">${task.name}</span>
-                                        ${menu_button}
-                                        <div class="task-menu display_none">
-                                            <div class="menu-options">
-                                                <button class="edit-task-button" onclick="Edit_task(this)">
-                                                    <i class="fa-solid fa-pen"></i> Редактирай
-                                                </button>
-                                                <button class="delete-task-button" onclick="Delete_task(this)">
-                                                    <i class="fa-solid fa-trash"></i> Изтрий
+                                    const task_html = `
+                                        <div class="task-box ${css_class}" data-id="${task.id}">
+                                            <div class="task-checkbox" ${onclick_handler} ${cursor_style}></div>
+                                            <span class="task-text">${task.name}</span>
+                                            ${menu_button}
+                                            <div class="task-menu display_none">
+                                                <div class="menu-options">
+                                                    <button class="edit-task-button" onclick="Edit_task(this)">
+                                                        <i class="fa-solid fa-pen"></i> Редактирай
+                                                    </button>
+                                                    <button class="delete-task-button" onclick="Delete_task(this)">
+                                                        <i class="fa-solid fa-trash"></i> Изтрий
+                                                    </button>
+                                                </div>
+                                                <button class="close-menu-button" onclick="Toggle_menu(this)">
+                                                    <i class="fa-solid fa-xmark"></i>
                                                 </button>
                                             </div>
-                                            <button class="close-menu-button" onclick="Toggle_menu(this)">
-                                                <i class="fa-solid fa-xmark"></i>
-                                            </button>
                                         </div>
-                                    </div>
-                                `;
-                                if(task.is_finished && task.day_for < today_str)
-                                    {day_container.insertAdjacentHTML("afterbegin", task_html);}
-                                else
-                                    {day_container.insertAdjacentHTML("beforeend", task_html);}}});}});});
+                                    `;
+                                    if(task.is_finished && task.day_for < today_str)
+                                        {day_container.insertAdjacentHTML("afterbegin", task_html);}
+                                    else
+                                        {day_container.insertAdjacentHTML("beforeend", task_html);}}});}});});
     
 
     function Toggle_task(checkbox)
@@ -247,15 +247,15 @@
         const task_id=task_box.getAttribute("data-id");const task_container = task_box.parentElement;
 
         fetch("/tasks/" + task_id + "/checkbox", {method: "PATCH"})
-        .then((response) => response.json().then((data) => ({status: response.status, body: data})))
-        .then((result) =>
-                {if (result.status===200)
-                        {task_box.classList.toggle("is-finished");
-                        
-                        if (task_box.classList.contains("is-finished"))
-                                {task_container.appendChild(task_box);}
-                        else
-                                {task_container.insertBefore(task_box, task_container.firstChild);}}});}
+            .then((response) => response.json().then((data) => ({status: response.status, body: data})))
+            .then((result) =>
+                    {if (result.status===200)
+                            {task_box.classList.toggle("is-finished");
+                            
+                            if (task_box.classList.contains("is-finished"))
+                                    {task_container.appendChild(task_box);}
+                            else
+                                    {task_container.insertBefore(task_box, task_container.firstChild);}}});}
     
     
     function Toggle_menu(element)
