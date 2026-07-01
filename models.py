@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import String, Integer, Boolean, ForeignKey, Date
+from sqlalchemy import String, Integer, Boolean, ForeignKey, Date, Text
 from sqlalchemy.orm import DeclarativeBase, mapped_column, Mapped, relationship
 from datetime import date
 
@@ -14,7 +14,7 @@ class User(Base):
     username: Mapped[str] = mapped_column(String(20), unique=True, nullable=False)
     email: Mapped[str] = mapped_column(String(50), unique=True, nullable=False)
     password: Mapped[str] = mapped_column(String(255), nullable=False)
-    profile_picture: Mapped[str] = mapped_column(String(255), nullable=True)
+    profile_picture: Mapped[str] = mapped_column(Text, nullable=True)
     tasks: Mapped[list["Task"]] = relationship("Task", back_populates="user", cascade="all, delete-orphan")
 
 class Task(Base):
