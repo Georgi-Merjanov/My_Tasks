@@ -13,7 +13,7 @@
         
         <label for="avatar-input">
             {% if(user.profile_picture) %}
-                <img src="{{ url_for('static', filename='profile_pictures/' + user.profile_picture) }}" style="border: 0.25rem solid rgb(221, 221, 150);" alt="Профилна снимка">
+                <img src="{{ user.profile_picture }}" style="border: 0.25rem solid rgb(221, 221, 150);" alt="Профилна снимка">
             {% else %}
                 <img src="{{ url_for('static', filename='pictures/camera.png')}}" class="placeholder">
             {% endif %}
