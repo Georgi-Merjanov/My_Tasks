@@ -3,13 +3,15 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import date, timedelta
 from flask_migrate import Migrate
 from models import db, User, Task
+from dotenv import load_dotenv
 from password import password
 import os
 
+load_dotenv()
 app=Flask(__name__)
 app.secret_key="taen_kluch"
 
-app.config["SQLALCHEMY_DATABASE_URI"] = f"postgresql://postgres:{password}@localhost:5432/python_project_tasks"
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"]=False
 db.init_app(app)
 migrate=Migrate(app, db)
