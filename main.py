@@ -4,7 +4,6 @@ from datetime import date, timedelta
 from flask_migrate import Migrate
 from models import db, User, Task
 from dotenv import load_dotenv
-from password import password
 import base64
 import os
 
