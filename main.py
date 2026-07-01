@@ -568,5 +568,7 @@ def statistics_data():
     
     return jsonify(dictionary), 200
 
+
+app = app
 if(__name__ == "__main__"):
     app.run(debug=True)
