@@ -5,6 +5,7 @@ from flask_migrate import Migrate
 from models import db, User, Task
 from dotenv import load_dotenv
 from password import password
+import base64
 import os
 
 load_dotenv()
@@ -311,14 +312,8 @@ def update_avatar(user_id):
     if(request.is_json):
         data=request.get_json()
         if("profile_picture" in data and data.get("profile_picture") is None):
-            if(user.profile_picture):
-                file_path = os.path.join(app.root_path, "static", "profile_pictures", user.profile_picture)
-                if(os.path.exists(file_path)):
-                    os.remove(file_path)
-            
             user.profile_picture=None
             db.session.commit()
-            
             return jsonify({"success": "Снимката беше премахната успешно!"}), 200
 
     if('profile_picture' in request.files):
@@ -327,11 +322,12 @@ def update_avatar(user_id):
         if(file.filename == ''):
             return jsonify({"error": "Не е избран валиден файл!"}), 400
             
-        file.filename = f"{user.id}.png"
-        path = os.path.join(app.root_path, "static", "profile_pictures", file.filename)
-        file.save(path)
+        file_bytes = file.read()
+        base64_encoded = base64.b64encode(file_bytes).decode('utf-8')
+        file_type = file.content_type
+        data_url = f"data:{file_type};base64,{base64_encoded}"
         
-        user.profile_picture = file.filename
+        user.profile_picture = data_url
         db.session.commit()
         
         return jsonify({"success": "Снимката беше обновена успешно!"}), 200
