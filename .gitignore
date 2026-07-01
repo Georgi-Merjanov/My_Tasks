@@ -3,3 +3,4 @@ __pycache__/
 static/profile_pictures/*
 migrations/
 password.py
+.env
